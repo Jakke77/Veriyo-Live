@@ -6,7 +6,7 @@
 *.svg text eol=lf
 *.rc text eol=lf
 *.c text eol=lf
-*.ps1 text eol=crlf
+*.ps1 text eol=lf
 *.png binary
 *.ico binary
 
