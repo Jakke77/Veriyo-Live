@@ -10,7 +10,7 @@ Maisema pysyy paikallaan, Otava seuraa oikeaa tähtitaivasta. Mukana Veri Ajan
 
 ![Veriyö Live työpöydällä](screenshots/taustakuva.png)
 
-## Versio 0.1.1
+## Versio 0.1.2
 
 Oma taustakuvasovellus Windows 10/11:lle ja Ubuntu GNOME:lle. Maisema pysyy paikallaan,
 seitsemän oikeaa Otavan tähteä liikkuu antamasi paikan tähtitaivaan mukana.
@@ -43,7 +43,7 @@ ohjelmalla piirrettyä tähteä edustavat laskettua taivasta; pohjakuvan sumut j
 Asenna ladattu paketti:
 
 ```bash
-sudo apt install ./veriyo-live_0.1.1_all.deb
+sudo apt install ./veriyo-live_0.1.2_all.deb
 ```
 
 Sovellus löytyy nimellä **Veriyö Live**. Komento: `veriyo-live`.
@@ -152,7 +152,7 @@ henkilökohtaisia asetuksia, taustakuvan varmuuskopioita tai sovelluksen tietoja
 Päivityksen yhteydessä muuta `veriyo_live/__init__.py`-versionumero ja
 `packaging/launcher.rc`-versionumerot. `main`-haaran päivitys ajaa testit ja
 rakentaa paketit ladattaviksi Actionsin artefakteista. Version mukaisen tagin
-(esimerkiksi `v0.1.1`) julkaisu rakentaa molemmat käyttöjärjestelmäpaketit ja
+(esimerkiksi `v0.1.2`) julkaisu rakentaa molemmat käyttöjärjestelmäpaketit ja
 julkaisee ne yhdessä lähde-ZIP:n ja SHA256-tarkisteiden kanssa. Julkaisua ei
 tehdä, jos kumman tahansa käyttöjärjestelmän tarkistus epäonnistuu.
 
