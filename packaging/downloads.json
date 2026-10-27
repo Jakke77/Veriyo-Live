@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "target": "Windows 10 1809 or newer, x64",
+  "python_source": "https://www.python.org/ftp/python/3.12.10/python-3.12.10-embed-amd64.zip",
+  "wheels_source": "https://pypi.org/",
+  "files": [
+    {
+      "name": "PyQt6-6.8.1-cp39-abi3-win_amd64.whl",
+      "sha256": "70bad7b890a8f9e9e5fb9598c544b832d9d9d99a9519e0009cb29c1e15e96632",
+      "size": 6723466
+    },
+    {
+      "name": "PyQt6_Qt6-6.8.2-py3-none-win_amd64.whl",
+      "sha256": "28e2bb641f05b01e498503c3ef01c8a919d6e0e96b50230301c0baac2b7d1433",
+      "size": 71934164
+    },
+    {
+      "name": "pyqt6_sip-13.10.2-cp312-cp312-win_amd64.whl",
+      "sha256": "c7b34a495b92790c70eae690d9e816b53d3b625b45eeed6ae2c0fe24075a237e",
+      "size": 53519
+    },
+    {
+      "name": "python-3.12.10-embed-amd64.zip",
+      "sha256": "4acbed6dd1c744b0376e3b1cf57ce906f9dc9e95e68824584c8099a63025a3c3",
+      "size": 11133606
+    },
+    {
+      "name": "tzdata-2026.2-py2.py3-none-any.whl",
+      "sha256": "bbe9af844f658da81a5f95019480da3a89415801f6cc966806612cc7169bffe7",
+      "size": 349321
+    }
+  ]
+}

@@ -1,0 +1,168 @@
+{
+  "tool": "Astropy 7.1.0 / ERFA 2.0.1.5 FK5 J2000 with catalogue proper motions, no refraction; bundled IERS-B, automatic downloads disabled",
+  "latitude": 65.0121,
+  "longitude": 25.4651,
+  "fixtures": [
+    {
+      "utc": "2026-06-26T00:00:00+00:00",
+      "stars": [
+        {
+          "name": "Dubhe",
+          "altitude": 41.280736343685305,
+          "azimuth": 332.56675750554535
+        },
+        {
+          "name": "Merak",
+          "altitude": 36.24876797227698,
+          "azimuth": 330.14776606276473
+        },
+        {
+          "name": "Phecda",
+          "altitude": 36.91342000943122,
+          "azimuth": 320.33579486621545
+        },
+        {
+          "name": "Megrez",
+          "altitude": 41.313471625983674,
+          "azimuth": 318.9371431937991
+        },
+        {
+          "name": "Alioth",
+          "altitude": 43.25329666534095,
+          "azimuth": 312.0798397367879
+        },
+        {
+          "name": "Mizar",
+          "altitude": 44.84646030097835,
+          "azimuth": 306.42848581124997
+        },
+        {
+          "name": "Alkaid",
+          "altitude": 42.389932563358734,
+          "azimuth": 297.84905607817404
+        }
+      ]
+    },
+    {
+      "utc": "2026-10-24T09:00:00+00:00",
+      "stars": [
+        {
+          "name": "Dubhe",
+          "altitude": 77.54767972774636,
+          "azimuth": 266.5978796278482
+        },
+        {
+          "name": "Merak",
+          "altitude": 74.14842580281035,
+          "azimuth": 249.3987274212732
+        },
+        {
+          "name": "Phecda",
+          "altitude": 76.43369840764746,
+          "azimuth": 219.18898490719093
+        },
+        {
+          "name": "Megrez",
+          "altitude": 80.7742671356115,
+          "azimuth": 212.48227948985925
+        },
+        {
+          "name": "Alioth",
+          "altitude": 80.79684153978003,
+          "azimuth": 178.07820390399274
+        },
+        {
+          "name": "Mizar",
+          "altitude": 79.03438668859091,
+          "azimuth": 155.05727566875032
+        },
+        {
+          "name": "Alkaid",
+          "altitude": 72.55044155032972,
+          "azimuth": 148.43238894683023
+        }
+      ]
+    },
+    {
+      "utc": "2026-10-24T15:00:00+00:00",
+      "stars": [
+        {
+          "name": "Dubhe",
+          "altitude": 44.880784172276165,
+          "azimuth": 323.33060960597766
+        },
+        {
+          "name": "Merak",
+          "altitude": 40.1366987092078,
+          "azimuth": 319.906293358031
+        },
+        {
+          "name": "Phecda",
+          "altitude": 41.710287073147455,
+          "azimuth": 309.64976177666637
+        },
+        {
+          "name": "Megrez",
+          "altitude": 46.202812930511776,
+          "azimuth": 308.82819866870756
+        },
+        {
+          "name": "Alioth",
+          "altitude": 48.67896667760607,
+          "azimuth": 301.68008295655227
+        },
+        {
+          "name": "Mizar",
+          "altitude": 50.656914289954905,
+          "azimuth": 295.6709364763163
+        },
+        {
+          "name": "Alkaid",
+          "altitude": 48.684262591470535,
+          "azimuth": 285.8090187555329
+        }
+      ]
+    },
+    {
+      "utc": "2026-10-24T21:00:00+00:00",
+      "stars": [
+        {
+          "name": "Dubhe",
+          "altitude": 38.241112475022774,
+          "azimuth": 16.181883322933032
+        },
+        {
+          "name": "Merak",
+          "altitude": 33.092580569502964,
+          "azimuth": 18.073429895681254
+        },
+        {
+          "name": "Phecda",
+          "altitude": 29.110249219903817,
+          "azimuth": 10.096482702410139
+        },
+        {
+          "name": "Megrez",
+          "altitude": 32.11007045145418,
+          "azimuth": 6.149489778272947
+        },
+        {
+          "name": "Alioth",
+          "altitude": 30.824877954941314,
+          "azimuth": 359.96448133378544
+        },
+        {
+          "name": "Mizar",
+          "altitude": 29.934293386463118,
+          "azimuth": 355.0148599400671
+        },
+        {
+          "name": "Alkaid",
+          "altitude": 24.664559211636046,
+          "azimuth": 350.40223260041006
+        }
+      ]
+    }
+  ],
+  "provenance": "Computed 2026-10-24 from BSC V/50 J2000 catalogue positions; SkyCoord FK5.apply_space_motion then AltAz(EarthLocation=Oulu, pressure=0 hPa). Reference includes nutation, aberration, and bundled IERS; application uses a mean geometric orientation. 0.01 degree angular tolerance."
+}
