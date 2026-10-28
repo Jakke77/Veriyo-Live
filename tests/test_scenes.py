@@ -16,7 +16,7 @@ from veriyo_live.celestial import (blood_progress, equatorial_stars, local_day_b
                                    moon_at, moon_day, moon_horizontal, stars_at)
 from veriyo_live.engine import Engine
 from veriyo_live.render import render
-from veriyo_live.scenes import PERIOD, SCENES, SceneEntry, render_scene
+from veriyo_live.scenes import PERIOD, SCENES, SceneEntry, render_scene, sky_point
 from veriyo_live.settings import Settings
 from test_live import FakeBackend, spin_until, APP
 from test_windows_lock import FakeWindowsBackend
@@ -26,6 +26,47 @@ NOW = datetime(2026,10,28,19,tzinfo=timezone.utc)
 
 
 class CelestialTests(unittest.TestCase):
+    def test_north_view_cardinals_and_zenith_are_not_mirrored(self):
+        north=sky_point(0,0,100,200,10)
+        west=sky_point(0,270,100,200,10)
+        east=sky_point(0,90,100,200,10)
+        zenith=sky_point(90,0,100,200,10)
+        self.assertAlmostEqual(north.x(),100);self.assertAlmostEqual(north.y(),200)
+        self.assertAlmostEqual(west.x(),80);self.assertAlmostEqual(west.y(),200)
+        self.assertAlmostEqual(east.x(),120);self.assertAlmostEqual(east.y(),200)
+        self.assertAlmostEqual(zenith.x(),100);self.assertAlmostEqual(zenith.y(),180)
+
+    def test_screenshot_evening_otava_is_below_and_west_of_polaris(self):
+        moment=datetime(2026,10,28,20,24,tzinfo=ZONE)
+        stars={hip:(alt,az) for hip,_,alt,az,_ in stars_at(int(moment.timestamp()),65.071562,25.507046)}
+        pole=sky_point(*stars[11767],0,0,1)
+        for hip in (54061,53910,58001,59774,62956,65378,67301):
+            point=sky_point(*stars[hip],0,0,1)
+            self.assertIsNotNone(point)
+            self.assertGreater(point.y(),pole.y())
+        tail=sky_point(*stars[67301],0,0,1)
+        self.assertLess(tail.x(),pole.x())
+
+    def test_star_projection_matches_independent_reference_directions(self):
+        # Reference fixtures were computed independently with Astropy/ERFA.
+        fixture=json.loads((ROOT/'tests/otava-astropy.json').read_text())
+        from veriyo_live.sky import sky_at
+        for case in fixture['fixtures']:
+            moment=datetime.fromisoformat(case['utc'])
+            for star,expected in zip(sky_at(moment,fixture['latitude'],fixture['longitude']),case['stars']):
+                actual=sky_point(star.altitude,star.azimuth,0,0,1)
+                reference=sky_point(expected['altitude'],expected['azimuth'],0,0,1)
+                self.assertEqual(actual is None,reference is None)
+                if actual is not None:
+                    self.assertAlmostEqual(actual.x(),reference.x(),delta=.005)
+                    self.assertAlmostEqual(actual.y(),reference.y(),delta=.005)
+
+    def test_back_sky_and_below_horizon_do_not_fold_into_north_view(self):
+        self.assertIsNone(sky_point(0,180,0,0,1))
+        self.assertIsNone(sky_point(45,180,0,0,1))
+        self.assertIsNone(sky_point(-10,0,0,0,1))
+        self.assertIsNone(sky_point(10,170,0,0,1))
+
     def test_moon_matches_independent_astropy_topocentric_reference(self):
         cases=json.loads((ROOT/'tests/moon-astropy.json').read_text())['cases']
         for case in cases:
@@ -93,6 +134,28 @@ class CelestialTests(unittest.TestCase):
 
 
 class SceneTests(unittest.TestCase):
+    def test_both_sky_scenes_draw_otava_at_north_facing_screen_positions(self):
+        from veriyo_live.render import project
+        moment=datetime(2026,10,28,20,24,tzinfo=ZONE)
+        stars={hip:(alt,az) for hip,_,alt,az,_ in stars_at(int(moment.timestamp()),65.071562,25.507046)}
+        for theme in ('polaris','moon'):
+            image=render_scene(moment,Settings(theme=theme,date_mode='none'),1920,1080,0)
+            for hip in (11767,67301):
+                x,y=project(*stars[hip])
+                px=round(1920*.35+x*min(1920*.145,1080*.31))
+                py=round(1080*.76+y*min(1920*.145,1080*.31))
+                self.assertGreater(max(image.pixelColor(xx,yy).blue()
+                    for xx in range(px-2,px+3) for yy in range(py-2,py+3)),180,(theme,hip))
+
+    def test_moon_outside_north_view_has_explicit_notice_even_without_guides(self):
+        import veriyo_live.scenes as scenes
+        moon=replace(moon_at(NOW,65,25),altitude=45,azimuth=180)
+        with patch.object(scenes,'moon_at',return_value=moon),patch.object(scenes,'label',wraps=scenes.label) as labels:
+            render_scene(NOW,Settings(theme='moon',guides=False,date_mode='none'),640,360,0)
+        values=[call.args[2] for call in labels.call_args_list]
+        self.assertIn('Kuu on pohjoisnäkymän ulkopuolella',values)
+        self.assertNotIn('Kuu on horisontin alapuolella',values)
+
     def test_settings_migrate_and_allow_global_new_sky_locations(self):
         with tempfile.TemporaryDirectory() as folder:
             path=Path(folder)/'settings.json';path.write_text('{"theme":"otava"}')

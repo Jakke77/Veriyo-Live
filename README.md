@@ -10,7 +10,16 @@ Mukana ovat myös Otava-maisemat ja Ubuntun oletustaustakuvakokoelma.
 
 ![Veriyö Live työpöydällä](screenshots/taustakuva.png)
 
-## Versio 0.4.0 · puro, ruusut ja majakka
+## Versio 0.4.1 · tähtitaivaan suunta korjattu
+
+**Pohjantähden tähtitaivas** ja **Kuun kulkureitti** katsovat nyt pohjoiseen:
+länsi on vasemmalla, itä oikealla ja zeniitti ylhäällä. Tähdet, tähtikuvioiden
+yhdysviivat ja Kuun reitti käyttävät samaa stereografista projektiota kuin
+alkuperäinen Otava-tausta. Koko taivaan aiempi peilattu karttanäkymä on korvattu
+pohjoiseen avautuvalla näkymällä. Näkymän ulkopuolella olevasta Kuusta kerrotaan
+erikseen; kuunvaihe ja nousu-/laskuajat näkyvät edelleen.
+
+## Puro, ruusut ja majakka
 
 | Teema | Sisältö |
 | --- | --- |
@@ -60,8 +69,9 @@ sovellukseen ja toimivat ilman lisäpakettia tai verkkoyhteyttä.
 
 **Pohjantähden tähtitaivas** ja **Kuun kulkureitti** tukevat koko maapallon
 koordinaatteja. Valitse myös sijainnin aikavyöhyke. Eteläisellä pallonpuoliskolla
-Pohjantähti jää horisontin alle; näkyvä kartta näyttää eteläistä taivasta.
-Kartassa zeniitti on keskellä, pohjoinen ylhäällä ja itä oikealla. Metsä on kuvitusta.
+Pohjantähti jää horisontin alle. Näkymä katsoo aina pohjoiseen: pohjoinen
+horisontti on alhaalla, zeniitti ylhäällä, länsi vasemmalla ja itä oikealla.
+Koko taivas ei mahdu tähän näkymään. Metsä on kuvitusta.
 Tähtien ja Kuun todellinen eteneminen on hidasta. Koristeelliset kehät, sinetit,
 valopulssi ja avaruuskappaleet liikkuvat rauhallisesti 96 sekunnin kierrossa.
 
@@ -148,7 +158,7 @@ ohjelmalla piirrettyä tähteä edustavat laskettua taivasta; pohjakuvan sumut j
 Asenna ladattu paketti:
 
 ```bash
-sudo apt install ./veriyo-live_0.4.0_all.deb
+sudo apt install ./veriyo-live_0.4.1_all.deb
 ```
 
 Sovellus löytyy nimellä **Veriyö Live**. Komento: `veriyo-live`.
@@ -258,7 +268,7 @@ henkilökohtaisia asetuksia, taustakuvan varmuuskopioita tai sovelluksen tietoja
 Päivityksen yhteydessä muuta `veriyo_live/__init__.py`-versionumero ja
 `packaging/launcher.rc`-versionumerot. `main`-haaran päivitys ajaa testit ja
 rakentaa paketit ladattaviksi Actionsin artefakteista. Version mukaisen tagin
-(esimerkiksi `v0.4.0`) julkaisu rakentaa molemmat käyttöjärjestelmäpaketit ja
+(esimerkiksi `v0.4.1`) julkaisu rakentaa molemmat käyttöjärjestelmäpaketit ja
 julkaisee ne yhdessä lähde-ZIP:n ja SHA256-tarkisteiden kanssa. Julkaisua ei
 tehdä, jos kumman tahansa käyttöjärjestelmän tarkistus epäonnistuu.
 
