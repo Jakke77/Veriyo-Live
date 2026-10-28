@@ -60,8 +60,12 @@ class GnomeBackend:
         return {'kind': self.kind, 'original': records, 'frames': []}
 
     def apply(self, path, lock_screen, journal):
-        uri = json.dumps(Path(path).resolve().as_uri())
+        self.apply_paths(path, path, journal)
+
+    def apply_paths(self, desktop_path, lock_path, journal):
         for record in journal['original']:
+            path=lock_path if record['schema']==self.saver else desktop_path
+            uri=json.dumps(Path(path).resolve().as_uri())
             value = "'zoom'" if record['key'] == 'picture-options' else uri
             self.set(record['schema'], record['key'], value)
 
@@ -190,6 +194,18 @@ class WallpaperSession:
         # recognise both the old frame and a partially applied next frame.
         atomic_json(self.path, value)
         self.adapter.apply(frame, lock_screen, value)
+
+    def apply_paths(self, desktop_path, lock_path):
+        value=json.loads(self.path.read_text(encoding='utf-8'))
+        for path in (desktop_path,lock_path):
+            frame=str(Path(path).resolve())
+            if frame not in value['frames']:value['frames'].append(frame)
+        atomic_json(self.path,value)
+        self.adapter.apply_paths(desktop_path,lock_path,value)
+
+    def can_resume(self):
+        value=json.loads(self.path.read_text(encoding='utf-8'))
+        return self.adapter.can_resume(value)
 
     def restore(self):
         if not self.path.exists():

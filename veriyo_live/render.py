@@ -41,10 +41,17 @@ def text(painter, rect, content, size, color='#f0788b', align=Qt.AlignmentFlag.A
     painter.drawText(rect, align | Qt.AlignmentFlag.AlignVCenter, content)
 
 
-def render(moment, settings, width=1920, height=1080, background=None):
+def render(moment, settings, width=1920, height=1080, background=None, library=None):
     settings.validate()
     if type(width) is not int or type(height) is not int or not 320 <= width <= 7680 or not 240 <= height <= 4320:
         raise ValueError('Kuvan tarkkuus ei ole tuettu (320×240…7680×4320).')
+    if moment.tzinfo is None or moment.utcoffset() is None:
+        raise ValueError('Aikaleima tarvitsee aikavyöhykkeen.')
+    if settings.theme == 'ubuntu':
+        from .ubuntu_pack import PackLibrary, render_motion
+        from .settings import data_dir
+        library=library or PackLibrary(data_dir())
+        return render_motion(library.entry(settings.ubuntu_version),moment.timestamp(),width,height)
     source = background if background is not None else QImage(str(ASSETS / (settings.theme + '.png')))
     if source.isNull():
         raise ValueError('Taustakuvan pohjaa ei löydy tai kuva on vioittunut.')

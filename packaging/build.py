@@ -21,7 +21,7 @@ def copy_tree(source, target):
 
 def stage_source(target):
     target.mkdir(parents=True,exist_ok=False)
-    for folder in ('veriyo_live','tests','packaging','docs','screenshots'):
+    for folder in ('veriyo_live','tests','packaging','docs','screenshots','tools','ubuntu-pack'):
         copy_tree(ROOT/folder,target/folder)
     for name in ('main.py','README.md','LICENSE','THIRD_PARTY_NOTICES.md','requirements.txt'):
         shutil.copyfile(ROOT/name,target/name)

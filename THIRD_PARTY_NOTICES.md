@@ -39,3 +39,11 @@ Windowsin yksityinen Python 3.12.10 -ajoympäristö: Python Software Foundation,
 PSF-lisenssi; runtime/LICENSE.txt ja https://www.python.org/ftp/python/3.12.10/
 Mukana oleva tzdata-wheel: Python Software Foundation / IANA-aikavyöhyketiedot;
 sen dist-info sisältää alkuperäiset lisenssit ja lähdetiedot.
+
+## Ubuntu live -lisäpaketti
+
+45 Ubuntu-version alkuperäiset oletuskuvat ovat Canonical Ltd:n ja Ubuntu artwork -tekijöiden kuvitusta. Version ja kuvan yhdistämisen lähde on Corbin Davenportin The Spacebar -artikkeli (16.10.2026): https://www.spacebar.news/ubuntu-linux-default-wallpapers/ . Artikkelin tekstiä ei kopioida pakettiin.
+
+Kuvakohtaiset lähdeosoitteet ja alkuperäisten SHA256-arvot ovat `veriyo_live/assets/ubuntu_catalog.json`-tiedostossa. Alkuperäiset lähdepakettien copyright-tiedostot ja niiden osoitteet ovat `ubuntu-pack/LICENSES`-kansiossa ja asennetun lisäpaketin mukana. Sovelluskoodin MIT-lisenssi ei muuta kuvituksen lisenssejä.
+
+Muutokset: 1920×1080-sovitus, pieni paikallinen muodonmuutos ja rauhalliset siirtymät. Tämä on itsenäinen fanisovitus; Ubuntu ja sen tavaramerkit kuuluvat Canonicalille.

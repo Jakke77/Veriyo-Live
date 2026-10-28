@@ -1,0 +1,1515 @@
+{
+  "format": 1,
+  "releases": [
+    {
+      "id": "ubuntu-4.10",
+      "version": "4.10",
+      "name": "Warty Warthog",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/4.10-Warty-Warthog.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-4.10.png",
+      "sha256": "1b1c49fedb758dc22ee161e45b2652b1e890d2d8c716a7b6719369048959041b",
+      "source_size": [
+        1600,
+        1200
+      ],
+      "motion_label": "Pehmeä valon hengitys",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 0.0,
+        "zones": [
+          [
+            0.5,
+            0.47,
+            0.56,
+            0.58,
+            3.0,
+            2.8,
+            0.0015,
+            0.0015
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-5.04",
+      "version": "5.04",
+      "name": "Hoary Hedgehog",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/5.04-Hoary-Hedgehog.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-5.04.png",
+      "sha256": "8d76f1234115e9363e8ec3ecaae5f51353cdec15c065b5a7c45bd9efa648a96c",
+      "source_size": [
+        1600,
+        1200
+      ],
+      "motion_label": "Valosäteiden rauhallinen kierto",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 0.61803,
+        "zones": [
+          [
+            0.5,
+            0.47,
+            0.56,
+            0.58,
+            3.0,
+            2.8,
+            0.0015,
+            0.0015
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-5.10",
+      "version": "5.10",
+      "name": "Breezy Badger",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/5.10-Breezy-Badger.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-5.10.png",
+      "sha256": "0caefc512e0cdb4c4cb27aeb01e94cabc97c5c15afceef09e475d0ec48435bd0",
+      "source_size": [
+        1600,
+        1200
+      ],
+      "motion_label": "Hidas hehkun aalto",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 1.23607,
+        "zones": [
+          [
+            0.5,
+            0.47,
+            0.56,
+            0.58,
+            3.0,
+            2.8,
+            0.0015,
+            0.0015
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-6.06",
+      "version": "6.06",
+      "name": "Dapper Drake",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/6.06-LTS-Dapper-Drake.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-6.06.png",
+      "sha256": "1e33f19894e392d0c5d319d8183f4f94fe5e96e61b8319406c577aad3f014776",
+      "source_size": [
+        1600,
+        1200
+      ],
+      "motion_label": "Valonauhojen virtaus",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 1.8541,
+        "zones": [
+          [
+            0.5,
+            0.47,
+            0.56,
+            0.58,
+            3.0,
+            2.8,
+            0.0015,
+            0.0015
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-6.10",
+      "version": "6.10",
+      "name": "Edgy Eft",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/6.10-Edgy-Eft.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-6.10.png",
+      "sha256": "6db99767b58f71312934f9d867c6d46495b7dd0f5ede68e28dcdceb2c2f489a1",
+      "source_size": [
+        1600,
+        1200
+      ],
+      "motion_label": "Silkkinen aaltoilu",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 2.47214,
+        "zones": [
+          [
+            0.5,
+            0.47,
+            0.56,
+            0.58,
+            3.0,
+            2.8,
+            0.0015,
+            0.0015
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-7.04",
+      "version": "7.04",
+      "name": "Feisty Fawn",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/7.04-Feisty-Fawn.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-7.04.png",
+      "sha256": "3eb19dda718713a80eb7284411eb1cc7c49d046414a1f561de9d26ac6b82e98d",
+      "source_size": [
+        1920,
+        1440
+      ],
+      "motion_label": "Pehmeä valon virtaus",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 3.09017,
+        "zones": [
+          [
+            0.5,
+            0.47,
+            0.56,
+            0.58,
+            3.0,
+            2.8,
+            0.0015,
+            0.0015
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-7.10",
+      "version": "7.10",
+      "name": "Gutsy Gibbon",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/7.10-Gutsy-Gibbon.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-7.10.png",
+      "sha256": "f7f9edbd24cb140202e03224c70ddd51f3fb600749f728b893d9f56604586cd8",
+      "source_size": [
+        1920,
+        1440
+      ],
+      "motion_label": "Nauhojen rauhallinen aalto",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 3.7082,
+        "zones": [
+          [
+            0.5,
+            0.47,
+            0.56,
+            0.58,
+            3.0,
+            2.8,
+            0.0015,
+            0.0015
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-8.04",
+      "version": "8.04",
+      "name": "Hardy Heron",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/8.04-LTS-Hardy-Heron.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-8.04.png",
+      "sha256": "714fabe2d4a268a17a70fafff70d451995c82e4bb82025344bb3b976a80f2754",
+      "source_size": [
+        1600,
+        1200
+      ],
+      "motion_label": "Haikaran hiljainen keinahdus",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 4.32624,
+        "zones": [
+          [
+            0.59,
+            0.48,
+            0.25,
+            0.42,
+            2,
+            3.4,
+            0.0028,
+            0.002
+          ],
+          [
+            0.6,
+            0.73,
+            0.23,
+            0.25,
+            1.8,
+            1.2,
+            0,
+            0.004
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-8.10",
+      "version": "8.10",
+      "name": "Intrepid Ibex",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/8.10-Intrepid-Ibex.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-8.10.png",
+      "sha256": "69ab61680ccbce9b4feb8bebcfa2f07782b0302f78db3b3d7d22e424646f21df",
+      "source_size": [
+        1440,
+        900
+      ],
+      "motion_label": "Vuorikauriin rauhallinen hengitys",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 4.94427,
+        "zones": [
+          [
+            0.45,
+            0.53,
+            0.29,
+            0.41,
+            1.0,
+            2.5,
+            0.0015,
+            0.002
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-9.04",
+      "version": "9.04",
+      "name": "Jaunty Jackalope",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/9.04-Jaunty-Jackalope.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-9.04.png",
+      "sha256": "f6c3fa03979829a1c2082dca51cd11f2f380086052e188e52f85e6bc7e3fe0a8",
+      "source_size": [
+        1920,
+        1440
+      ],
+      "motion_label": "Hidas kaarien virtaus",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 5.56231,
+        "zones": [
+          [
+            0.53,
+            0.51,
+            0.58,
+            0.58,
+            3.5,
+            2.3,
+            0.0018,
+            0.0015
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-9.10",
+      "version": "9.10",
+      "name": "Karmic Koala",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/9.10-Karmic-Koala.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-9.10.png",
+      "sha256": "41da7d4cb29859c90fe860ca6f1440e3707352efa475acac674de33dce429e1b",
+      "source_size": [
+        1920,
+        1440
+      ],
+      "motion_label": "Kultainen valoaalto",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 6.18034,
+        "zones": [
+          [
+            0.53,
+            0.51,
+            0.58,
+            0.58,
+            3.5,
+            2.3,
+            0.0018,
+            0.0015
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-10.04",
+      "version": "10.04",
+      "name": "Lucid Lynx",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/10.04-LTS-Lucid-Lynx.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-10.04.png",
+      "sha256": "2da1db1a1c05b7cda013cfdaf863d0217a072d4a1d812267e6a6f4664563a652",
+      "source_size": [
+        1680,
+        1050
+      ],
+      "motion_label": "Pehmeä värien ja muotojen aaltoilu",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 6.79837,
+        "zones": [
+          [
+            0.53,
+            0.51,
+            0.58,
+            0.58,
+            3.5,
+            2.3,
+            0.0018,
+            0.0015
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-10.10",
+      "version": "10.10",
+      "name": "Maverick Meerkat",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/10.10-Maverick-Meerkat.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-10.10.png",
+      "sha256": "4391fb0ffa7cf0b48d4627f1d49e1857937c6ed5a13398f200cf1730ac68878c",
+      "source_size": [
+        1920,
+        1280
+      ],
+      "motion_label": "Pehmeä värien ja muotojen aaltoilu",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 7.41641,
+        "zones": [
+          [
+            0.53,
+            0.51,
+            0.58,
+            0.58,
+            3.5,
+            2.3,
+            0.0018,
+            0.0015
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-11.04",
+      "version": "11.04",
+      "name": "Natty Narwhal",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/11.04-Natty-Narwhal.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-11.04.png",
+      "sha256": "eda1eb28d0bc3590da9e7f12ba4cf6d45acd21e77133461aeb8f8030f58176ab",
+      "source_size": [
+        1920,
+        1280
+      ],
+      "motion_label": "Pehmeä värien ja muotojen aaltoilu",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 8.03444,
+        "zones": [
+          [
+            0.53,
+            0.51,
+            0.58,
+            0.58,
+            3.5,
+            2.3,
+            0.0018,
+            0.0015
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-11.10",
+      "version": "11.10",
+      "name": "Oneiric Ocelot",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/11.10-Oneiric-Ocelot.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-11.10.png",
+      "sha256": "87c3ea42f79701649424d5aaa9a979cbf4f9ff4c7ff82548c8d4380246d0ffad",
+      "source_size": [
+        1920,
+        1280
+      ],
+      "motion_label": "Pehmeä värien ja muotojen aaltoilu",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 8.65248,
+        "zones": [
+          [
+            0.53,
+            0.51,
+            0.58,
+            0.58,
+            3.5,
+            2.3,
+            0.0018,
+            0.0015
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-12.04",
+      "version": "12.04",
+      "name": "Precise Pangolin",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/12.04-LTS-Precise-Pangolin.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-12.04.png",
+      "sha256": "8f21c18d8b04ee47daff248e9aa9d304efad0956a3a3ce401e9a310dc8c5794e",
+      "source_size": [
+        1920,
+        1280
+      ],
+      "motion_label": "Pehmeä värien ja muotojen aaltoilu",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 9.27051,
+        "zones": [
+          [
+            0.53,
+            0.51,
+            0.58,
+            0.58,
+            3.5,
+            2.3,
+            0.0018,
+            0.0015
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-12.10",
+      "version": "12.10",
+      "name": "Quantal Quetzal",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/12.10-Quantal-Quetzal.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-12.10.png",
+      "sha256": "e4ef712a9666924da1937420b0bdf06d45bcc2521fafe606e7cc02d636b63d48",
+      "source_size": [
+        2000,
+        1250
+      ],
+      "motion_label": "Pehmeä värien ja muotojen aaltoilu",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 9.88854,
+        "zones": [
+          [
+            0.53,
+            0.51,
+            0.58,
+            0.58,
+            3.5,
+            2.3,
+            0.0018,
+            0.0015
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-13.04",
+      "version": "13.04",
+      "name": "Raring Ringtail",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/13.04-Raring-Ringtail.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-13.04.png",
+      "sha256": "fc1dfb6b39eda75961783d5e935ce48636cd27e603ddfecaae76df2acf2eb2a0",
+      "source_size": [
+        2000,
+        1250
+      ],
+      "motion_label": "Pehmeä värien ja muotojen aaltoilu",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 10.50658,
+        "zones": [
+          [
+            0.53,
+            0.51,
+            0.58,
+            0.58,
+            3.5,
+            2.3,
+            0.0018,
+            0.0015
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-13.10",
+      "version": "13.10",
+      "name": "Saucy Salamander",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/13.10-Saucy-Salamander.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-13.10.png",
+      "sha256": "5c1c1f8e34759309247ea7c0615edd0e3995839b874e54b0f45d0fcec0b0549e",
+      "source_size": [
+        2000,
+        1250
+      ],
+      "motion_label": "Pehmeä värien ja muotojen aaltoilu",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 11.12461,
+        "zones": [
+          [
+            0.53,
+            0.51,
+            0.58,
+            0.58,
+            3.5,
+            2.3,
+            0.0018,
+            0.0015
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-14.04",
+      "version": "14.04",
+      "name": "Trusty Tahr",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/14.04-LTS-Trusty-Tahr.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-14.10.png",
+      "sha256": "3f4f182923674b084a430de16115116c72d0d2f2459e80b94804a728804077fc",
+      "source_size": [
+        2000,
+        1250
+      ],
+      "motion_label": "Geometristen pintojen hidas liike",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 11.74265,
+        "zones": [
+          [
+            0.53,
+            0.51,
+            0.58,
+            0.58,
+            3.5,
+            2.3,
+            0.0018,
+            0.0015
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-14.10",
+      "version": "14.10",
+      "name": "Utopic Unicorn",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/14.04-LTS-Trusty-Tahr.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-14.10.png",
+      "sha256": "3f4f182923674b084a430de16115116c72d0d2f2459e80b94804a728804077fc",
+      "source_size": [
+        2000,
+        1250
+      ],
+      "motion_label": "Geometristen pintojen hidas liike",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 12.36068,
+        "zones": [
+          [
+            0.53,
+            0.51,
+            0.58,
+            0.58,
+            3.5,
+            2.3,
+            0.0018,
+            0.0015
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-15.04",
+      "version": "15.04",
+      "name": "Vivid Vervet",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/15.04-Vivid-Vervet.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-15.04.png",
+      "sha256": "31237e072bca71d1b29225cbceb3f30028a32e3dee306618607a30cea78efda5",
+      "source_size": [
+        2000,
+        1125
+      ],
+      "motion_label": "Geometristen pintojen hidas liike",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 12.97871,
+        "zones": [
+          [
+            0.53,
+            0.51,
+            0.58,
+            0.58,
+            3.5,
+            2.3,
+            0.0018,
+            0.0015
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-15.10",
+      "version": "15.10",
+      "name": "Wily Werewolf",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/15.10-Wily-Werewolf.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-15.10.png",
+      "sha256": "6529a0a93e95f99c3b9a9b4bc81d2ef7bcb4ae438b1e8cbab9c4e215f45f588e",
+      "source_size": [
+        2000,
+        1125
+      ],
+      "motion_label": "Geometristen pintojen hidas liike",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 13.59675,
+        "zones": [
+          [
+            0.53,
+            0.51,
+            0.58,
+            0.58,
+            3.5,
+            2.3,
+            0.0018,
+            0.0015
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-16.04",
+      "version": "16.04",
+      "name": "Xenial Xerus",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/16.04-LTS-Xenial-Xerus.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-16.04.png",
+      "sha256": "cd520c86866a0ddab4f3b79d48ad7ebcb35722906d2f8344225384ad34ce5ac7",
+      "source_size": [
+        2000,
+        1125
+      ],
+      "motion_label": "Geometristen pintojen hidas liike",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 14.21478,
+        "zones": [
+          [
+            0.53,
+            0.51,
+            0.58,
+            0.58,
+            3.5,
+            2.3,
+            0.0018,
+            0.0015
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-16.10",
+      "version": "16.10",
+      "name": "Yakkety Yak",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/16.10-Yakkety-Yak.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-16.10.png",
+      "sha256": "4e0f461707d67c7a604445d739f5963bf0a77efeb0578142fd5ab654b36cb5b7",
+      "source_size": [
+        2000,
+        1125
+      ],
+      "motion_label": "Geometristen pintojen hidas liike",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 14.83282,
+        "zones": [
+          [
+            0.53,
+            0.51,
+            0.58,
+            0.58,
+            3.5,
+            2.3,
+            0.0018,
+            0.0015
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-17.04",
+      "version": "17.04",
+      "name": "Zesty Zapus",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/17.04-Zesty-Zapus.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-17.04.png",
+      "sha256": "4adabba90ab974ca85c68b7da3ed26f08ab313294d1e6e7abd0932ea992bf10e",
+      "source_size": [
+        2000,
+        1125
+      ],
+      "motion_label": "Geometristen pintojen hidas liike",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 15.45085,
+        "zones": [
+          [
+            0.53,
+            0.51,
+            0.58,
+            0.58,
+            3.5,
+            2.3,
+            0.0018,
+            0.0015
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-17.10",
+      "version": "17.10",
+      "name": "Artful Aardvark",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/17.10-Artful-Aardvark.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-17.10.png",
+      "sha256": "c05c108fa198a3f3045ae2c2453006e0f63f928c9dbeef7e18739d76a7c2271f",
+      "source_size": [
+        2000,
+        1125
+      ],
+      "motion_label": "Maasian rauhallinen hengitys",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 16.06888,
+        "zones": [
+          [
+            0.51,
+            0.5,
+            0.29,
+            0.38,
+            1.8,
+            2.8,
+            0.0018,
+            0.0025
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-18.04",
+      "version": "18.04",
+      "name": "Bionic Beaver",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/18.04-LTS-Bionic-Beaver.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-18.04.png",
+      "sha256": "8f3c86898c47c4437428aa07fea0798dbc6e512ca699ef84e8cbbb91aede2f4c",
+      "source_size": [
+        2000,
+        1125
+      ],
+      "motion_label": "Majavan hiljainen keinahdus",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 16.68692,
+        "zones": [
+          [
+            0.51,
+            0.5,
+            0.29,
+            0.38,
+            1.8,
+            2.8,
+            0.0018,
+            0.0025
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-18.10",
+      "version": "18.10",
+      "name": "Cosmic Cuttlefish",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/18.10-Cosmic-Cuttlefish.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-18.10.png",
+      "sha256": "cd2a88c005b2ed30fadd24aee97ae8633ddd804ba4b84929e4952ec6be1d8226",
+      "source_size": [
+        2000,
+        1125
+      ],
+      "motion_label": "Mustekalan lonkeroiden virtaus",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 17.30495,
+        "zones": [
+          [
+            0.51,
+            0.39,
+            0.25,
+            0.26,
+            1.8,
+            3.5,
+            0.001,
+            0.003
+          ],
+          [
+            0.5,
+            0.63,
+            0.32,
+            0.28,
+            4.5,
+            1.6,
+            0.0015,
+            0.003
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-19.04",
+      "version": "19.04",
+      "name": "Disco Dingo",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/19.04-Disco-Dingo.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-19.04.png",
+      "sha256": "bb7435a79972c13b88f8b62d0b4c96662db411d98b8c4fd6305e0a281203a7d2",
+      "source_size": [
+        2000,
+        1125
+      ],
+      "motion_label": "Dingon hidas pään kallistus",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 17.92299,
+        "zones": [
+          [
+            0.51,
+            0.5,
+            0.29,
+            0.38,
+            1.8,
+            2.8,
+            0.0018,
+            0.0025
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-19.10",
+      "version": "19.10",
+      "name": "Eoan Ermine",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/19.10-Eoan-Ermine.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-19.10.png",
+      "sha256": "e8ee16bbc54d0d8b31c6da16cf38fcb6a42880c70be04959d00f44cde26c3e2e",
+      "source_size": [
+        4096,
+        2304
+      ],
+      "motion_label": "Kärpän rauhallinen hengitys",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 18.54102,
+        "zones": [
+          [
+            0.51,
+            0.5,
+            0.29,
+            0.38,
+            1.8,
+            2.8,
+            0.0018,
+            0.0025
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-20.04",
+      "version": "20.04",
+      "name": "Focal Fossa",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/20.04-LTS-Focal-Fossa.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-20.04.png",
+      "sha256": "c440c4198c47d627f27d11d6ad96e3d0fc5f0b320b872f0a8a95e63e1db990ce",
+      "source_size": [
+        2000,
+        1125
+      ],
+      "motion_label": "Fossan hidas keinahdus",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 19.15905,
+        "zones": [
+          [
+            0.51,
+            0.5,
+            0.29,
+            0.38,
+            1.8,
+            2.8,
+            0.0018,
+            0.0025
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-20.10",
+      "version": "20.10",
+      "name": "Groovy Gorilla",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/20.10-Groovy-Gorilla.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-20.10.png",
+      "sha256": "ab5e402e452f228777965cbcf96233a144c9b134cd9704b64ab2e622a366d343",
+      "source_size": [
+        2000,
+        1125
+      ],
+      "motion_label": "Gorillan hillitty pään liike",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 19.77709,
+        "zones": [
+          [
+            0.51,
+            0.5,
+            0.29,
+            0.38,
+            1.8,
+            2.8,
+            0.0018,
+            0.0025
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-21.04",
+      "version": "21.04",
+      "name": "Hirsute Hippo",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/21.04-Hirsute-Hippo.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-21.04.png",
+      "sha256": "493d8fc48a1187d8bba0e5e88fc91515a12c8b2cafe95b0cc04a10d223f029d3",
+      "source_size": [
+        2000,
+        1125
+      ],
+      "motion_label": "Virtahevon ja veden rauhallinen liike",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 20.39512,
+        "zones": [
+          [
+            0.5,
+            0.49,
+            0.2,
+            0.2,
+            0.8,
+            2.6,
+            0,
+            0.002
+          ],
+          [
+            0.5,
+            0.59,
+            0.38,
+            0.14,
+            3.2,
+            1.4,
+            0,
+            0.003
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-21.10",
+      "version": "21.10",
+      "name": "Impish Indri",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/21.10-Impish-Indri.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-21.10.png",
+      "sha256": "3a837a1efb2c1a8f9a92c41c824b90c55e93e83adbcdb8d5be397053bc6326d2",
+      "source_size": [
+        2000,
+        1125
+      ],
+      "motion_label": "Indrin rauhallinen hengitys",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 21.01316,
+        "zones": [
+          [
+            0.51,
+            0.5,
+            0.29,
+            0.38,
+            1.8,
+            2.8,
+            0.0018,
+            0.0025
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-22.04",
+      "version": "22.04",
+      "name": "Jammy Jellyfish",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/22.04-LTS-Jammy-Jellyfish.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-22.04.png",
+      "sha256": "59b434140dbfb3e1c38fa64df70210b2bfcd536d534fe72c3ffe59eb121f37ec",
+      "source_size": [
+        4096,
+        2304
+      ],
+      "motion_label": "Meduusan leijunta ja lonkeroiden aalto",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 21.63119,
+        "zones": [
+          [
+            0.4,
+            0.45,
+            0.22,
+            0.25,
+            1.0,
+            3.5,
+            0.003,
+            0.004
+          ],
+          [
+            0.54,
+            0.63,
+            0.3,
+            0.24,
+            4.5,
+            2,
+            0.001,
+            0.003
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-22.10",
+      "version": "22.10",
+      "name": "Kinetic Kudu",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/22.10-Kinetic-Kudu.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-22.10.png",
+      "sha256": "4e517f40fcfb9ff3baa774af7806ad15df5f0058e185b67013c90e8908743062",
+      "source_size": [
+        2000,
+        1125
+      ],
+      "motion_label": "Kudun hidas keinahdus",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 22.24922,
+        "zones": [
+          [
+            0.51,
+            0.5,
+            0.29,
+            0.38,
+            1.8,
+            2.8,
+            0.0018,
+            0.0025
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-23.04",
+      "version": "23.04",
+      "name": "Lunar Lobster",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/23.04-Lunar-Lobster.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-23.04.png",
+      "sha256": "26dd3bb2f3d20501dfda6376e9caaf7401ef7d1b15a3d36a39861c613d36dcdd",
+      "source_size": [
+        2000,
+        1125
+      ],
+      "motion_label": "Hummerin tähtikuvion leijunta",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 22.86726,
+        "zones": [
+          [
+            0.51,
+            0.5,
+            0.23,
+            0.29,
+            1.8,
+            2.8,
+            0.0018,
+            0.0025
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-23.10",
+      "version": "23.10",
+      "name": "Mantic Minotaur",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/23.10-Mantic-Minotaur.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-23.10.png",
+      "sha256": "c0a1aba55332365f7f623fc6a9b4acbad9ec2c06f17ec5007e320c81afa86a28",
+      "source_size": [
+        2000,
+        1125
+      ],
+      "motion_label": "Minotaurin rauhallinen hengitys",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 23.48529,
+        "zones": [
+          [
+            0.51,
+            0.5,
+            0.23,
+            0.29,
+            1.8,
+            2.8,
+            0.0018,
+            0.0025
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-24.04",
+      "version": "24.04",
+      "name": "Noble Numbat",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/24.04-LTS-Noble-Numbat.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-24.04.png",
+      "sha256": "1377a123b03af394123837adfca6192c1694b9d469ea663b2af11420fdb04b68",
+      "source_size": [
+        2000,
+        1125
+      ],
+      "motion_label": "Kruunun hiljainen leijunta",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 24.10333,
+        "zones": [
+          [
+            0.51,
+            0.5,
+            0.23,
+            0.29,
+            1.8,
+            2.8,
+            0.0018,
+            0.0025
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-24.10",
+      "version": "24.10",
+      "name": "Oracular Oriole",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/24.10-Oracular-Oriole.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-24.10.png",
+      "sha256": "be047e9adb7bc7798ff4cd4638cf37af39fc96584ccba32627a73f1406dc28f6",
+      "source_size": [
+        2000,
+        1125
+      ],
+      "motion_label": "Kuhankeittäjän ja kehien liike",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 24.72136,
+        "zones": [
+          [
+            0.51,
+            0.5,
+            0.23,
+            0.29,
+            1.8,
+            2.8,
+            0.0018,
+            0.0025
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-25.04",
+      "version": "25.04",
+      "name": "Plucky Puffin",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/05/25.04-Plucky-Puffin.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-25.04.png",
+      "sha256": "797d73d935a8c93b6e7233bd5b0cacc6bc4a7d0195aaa0a5fa8d3eeb799e5233",
+      "source_size": [
+        2000,
+        1125
+      ],
+      "motion_label": "Lunnin ja aaltojen rauhallinen liike",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 25.33939,
+        "zones": [
+          [
+            0.52,
+            0.48,
+            0.19,
+            0.29,
+            1.2,
+            2.4,
+            0.001,
+            0.002
+          ],
+          [
+            0.52,
+            0.68,
+            0.25,
+            0.13,
+            3.5,
+            1.5,
+            0,
+            0.002
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-25.10",
+      "version": "25.10",
+      "name": "Questing Quokka",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2025/10/25.10-Questing-Quokka.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-25.10.png",
+      "sha256": "2a8e5b88386b744f620b52c01ade991370ce4e7d8de53facffe66b285eb24652",
+      "source_size": [
+        2000,
+        1125
+      ],
+      "motion_label": "Quokan rauhallinen hengitys",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 25.95743,
+        "zones": [
+          [
+            0.51,
+            0.5,
+            0.23,
+            0.29,
+            1.8,
+            2.8,
+            0.0018,
+            0.0025
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-26.04",
+      "version": "26.04",
+      "name": "Resolute Raccoon",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2026/03/warty-final-ubuntu.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-26.04.png",
+      "sha256": "1e8aa543115d47b28f28f98a098e7e9b17879e4f55564ab604d25a4f6d01d2db",
+      "source_size": [
+        2000,
+        1125
+      ],
+      "motion_label": "Pesukarhun rauhallinen hengitys",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 26.57546,
+        "zones": [
+          [
+            0.51,
+            0.5,
+            0.23,
+            0.29,
+            1.8,
+            2.8,
+            0.0018,
+            0.0025
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    },
+    {
+      "id": "ubuntu-26.10",
+      "version": "26.10",
+      "name": "Stonking Stingray",
+      "source_url": "https://storage.ghost.io/c/91/6a/916a9f97-6ca5-4206-befd-00d97de05b3d/content/images/2026/10/warty-final-ubuntu.png",
+      "article": "https://www.spacebar.news/ubuntu-linux-default-wallpapers/",
+      "original_file": "ubuntu-26.10.png",
+      "sha256": "fe92ccedb123baca19f3b9b28f1faa0d231676c48328b266d4f9411f12439e31",
+      "source_size": [
+        2000,
+        1125
+      ],
+      "motion_label": "Rauskun siipien rauhallinen aaltoilu",
+      "motion": {
+        "period": 48.0,
+        "frames": 16,
+        "phase": 27.1935,
+        "zones": [
+          [
+            0.48,
+            0.53,
+            0.18,
+            0.16,
+            0,
+            2.8,
+            0,
+            0.003
+          ],
+          [
+            0.39,
+            0.52,
+            0.13,
+            0.16,
+            0,
+            4.0,
+            0.001,
+            0.001
+          ],
+          [
+            0.55,
+            0.53,
+            0.14,
+            0.16,
+            0,
+            -4.0,
+            0.001,
+            0.001
+          ]
+        ]
+      },
+      "credit": "Canonical Ltd. ja Ubuntu artwork -tekijät; lähdepakettien tekijämerkinnät paketin LICENSES-kansiossa."
+    }
+  ]
+}
