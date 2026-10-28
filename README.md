@@ -108,15 +108,14 @@ sovellus ei voi palauttaa kuvatiedostosta: valitse se tarvittaessa Windowsin omi
 ## Lukitusnäytön ja live-kuvan rajat
 
 **Veriyö-taivaskuvat** ovat ajastetusti päivittyviä taustakuvia. **Ubuntu live -kuvat** käyttävät jatkuvaa rauhallista siirtymää. Tähtien todellinen hidas liike ei tarvitse videotoistoa.
-Avoimen sovelluksen esikatselu päivittyy normaalisti kerran sekunnissa ja
-nopeutettuna 10 kertaa sekunnissa; työpöytä päivittyy 1, 5 tai 26 minuutin välein.
+Veriyö-esikatselu päivittyy normaalisti kerran sekunnissa ja nopeutettuna 10 kertaa sekunnissa; Veriyö-työpöytä päivittyy 1, 5 tai 26 minuutin välein. Ubuntu live -esikatselu ja Windowsin taustapinta päivittyvät 10 kertaa sekunnissa; GNOME käyttää omaa sulavaa taustakuvasiirtymäänsä.
 Kumpikaan käyttöjärjestelmä ei takaa, että **jo näkyvissä oleva lukitusnäyttö**
 lataa kuvan uudelleen. Sitä ei väitetä jatkuvasti animoiduksi. Tietokoneen
 nukkuessa ei tehdä päivityksiä; herätessä asento korjataan.
 
 Kaikki näytöt saavat saman kuvan päänäytön tarkkuudella. Erilliset näyttökohtaiset
 sommittelut, vapaa sijaintialue ja sujuva videotausta voidaan tehdä myöhemmin.
-Tämän sommittelun sijainti on rajattu leveysasteille 60–70° N. Tähtimalli tukee vuosia 1900–2100.
+Otavan taivasnäkymän sijainti on rajattu leveysasteille 60–70° N. Ubuntu-kuvien liike ei riipu sijainnista. Tähtimalli tukee vuosia 1900–2100.
 
 ## Taustalla käyttö ja palautus
 
