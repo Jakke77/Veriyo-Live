@@ -265,6 +265,23 @@ class InstalledPackTests(unittest.TestCase):
                 if engine.busy:spin_until(lambda:not engine.busy)
                 engine.deleteLater()
 
+    def test_mixed_background_switch_keeps_the_same_original_backup(self):
+        with tempfile.TemporaryDirectory() as folder:
+            adapter=FakeBackend();engine=Engine(folder,adapter_factory=lambda:adapter)
+            engine.library=self.library;engine.timer.stop()
+            try:
+                engine.start(Settings(theme='stream'),640,360);spin_until(lambda:not engine.busy)
+                engine.set_background('ubuntu:8.04');spin_until(lambda:not engine.busy)
+                self.assertEqual(engine.settings.theme,'ubuntu');self.assertEqual(engine.motion_entry.version,'8.04')
+                engine.set_background('rose_garden');spin_until(lambda:not engine.busy)
+                self.assertEqual(engine.motion_entry.settings.theme,'rose_garden')
+                self.assertEqual(adapter.captures,1)
+                engine.restore();spin_until(lambda:not engine.busy)
+                self.assertEqual(adapter.current,'original')
+            finally:
+                if engine.busy:spin_until(lambda:not engine.busy)
+                engine.deleteLater()
+
     def test_disguised_non_jpeg_is_rejected_before_image_decoder(self):
         with ZipFile(self.archive) as original:
             value=json.loads(original.read('pack.json'))

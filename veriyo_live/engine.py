@@ -45,6 +45,7 @@ class Engine(QObject):
         self.settings = None
         self.pending_date_mode = None
         self.pending_ubuntu_version = None
+        self.pending_background = None
         self.motion_entry = None
         self.pending_freeze = False
         self.library = PackLibrary(directory)
@@ -72,6 +73,7 @@ class Engine(QObject):
         self.settings = replace(settings).validate()
         self.pending_date_mode = None
         self.pending_ubuntu_version = None
+        self.pending_background = None
         self.motion_entry = None
         self.pending_freeze = False
         self.size = (width, height)
@@ -166,6 +168,24 @@ class Engine(QObject):
         self.pending_ubuntu_version=None;self.motion_entry=None
         self._launch('update',self._update)
 
+    def set_background(self,key):
+        if self.settings is None:return
+        from .shuffle import with_background
+        with_background(self.settings,key)  # Validate before queuing any work.
+        self.pending_background=key
+        if self.running and not self.busy:self._refresh_background()
+
+    def _refresh_background(self):
+        from .shuffle import with_background
+        self.settings=with_background(self.settings,self.pending_background)
+        self.pending_background=None;self.pending_ubuntu_version=None
+        if self.pending_date_mode is not None:
+            self.settings=replace(self.settings,date_mode=self.pending_date_mode)
+            self.pending_date_mode=None
+        self.motion_entry=None
+        # Reuse the same session and original backup across every random switch.
+        self._launch('update',self._update)
+
     def stop(self):
         freeze=self.running and self.settings is not None and (self.settings.theme=='ubuntu' or self.settings.theme in SCENES)
         self.running = False
@@ -241,6 +261,8 @@ class Engine(QObject):
             self._restore_now()
         elif self.pending_freeze:
             self._freeze_now()
+        elif self.running and self.pending_background is not None:
+            self._refresh_background()
         elif self.running and self.pending_ubuntu_version is not None:
             self._refresh_ubuntu_version()
         elif self.running and self.pending_date_mode is not None:

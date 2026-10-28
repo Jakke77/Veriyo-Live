@@ -33,6 +33,9 @@ https://github.com/astronexus/HYG-Database · https://creativecommons.org/licens
 Uusien teemojen metsät, maisemat, kivikappaleet, kuun havainnollinen pintatekstuuri,
 sumut ja koneiston merkit piirretään projektin omalla ohjelmakoodilla. Kuun tekstuuri
 ei ole kraatterikartta. Avaruusmaisema ja Veri Ajan koneisto ovat kuvitusta.
+Myös puron, kasvihuoneen, ruusujen, majakan ja vieraan maailman maisemien kuvitus
+piirretään projektin omalla ohjelmakoodilla. Niiden päivärytmi perustuu valitun
+aikavyöhykkeen paikallisiin kellonaikoihin.
 
 Taustakuvapohjat `otava.png` ja `hiillos.png` on tehty 27.10.2026 kuvanmuokkauksella
 projektin alkuperäisistä 24.10.2026 luoduista Veriyö-kuvista. Alkuperäisen kuvan

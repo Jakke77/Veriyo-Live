@@ -1,2 +1,2 @@
 """Veriyö Live — offline sky wallpaper for Ubuntu and Windows."""
-VERSION = '0.3.0'
+VERSION = '0.4.0'

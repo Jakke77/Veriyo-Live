@@ -1,8 +1,8 @@
 # Veriyö Live
 
-**Liikkuvia taivasteemoja ja taustakuvia Windowsille ja Ubuntu GNOME:lle.**
-Otava, Pohjantähden tähtitaivas, Kuun kulkureitti, Veri Ajan taivaankoneisto ja
-hiljainen avaruusmaisema. Mukana on myös Ubuntun oletustaustakuvakokoelma.
+**Liikkuvia maisemia ja taivasteemoja Windowsille ja Ubuntu GNOME:lle.**
+Metsien puro, Varjoruusujen puutarha, Viimeinen majakka ja neljä taivasteemaa.
+Mukana ovat myös Otava-maisemat ja Ubuntun oletustaustakuvakokoelma.
 
 **[Lataa uusin julkaisu](https://github.com/Jakke77/Veriyo-Live/releases/latest)** ·
 [Julkaisut](https://github.com/Jakke77/Veriyo-Live/releases) ·
@@ -10,7 +10,39 @@ hiljainen avaruusmaisema. Mukana on myös Ubuntun oletustaustakuvakokoelma.
 
 ![Veriyö Live työpöydällä](screenshots/taustakuva.png)
 
-## Versio 0.3.0 · neljä uutta taivasteemaa
+## Versio 0.4.0 · puro, ruusut ja majakka
+
+| Teema | Sisältö |
+| --- | --- |
+| Metsien puro | Virtaava metsäpuro, sumua, kevyesti heiluvaa kasvillisuutta ja yöllä tulikärpäsiä. |
+| Varjoruusujen puutarha | Goottilainen kasvihuone vieraalla planeetalla, hitaasti avautuvia ruusuja, leijuvia terälehtiä ja sumussa häilyvä hahmo. |
+| Viimeinen majakka | Hylätty majakka, rauhallisesti kiertävä valokeila, meri, rengasplaneetta ja horisontissa vähitellen näkyvä suuri varjo. |
+
+![Metsien puro päivällä ja yöllä, Varjoruusujen puutarha ja Viimeinen majakka](screenshots/landscape-scenes.jpg)
+
+[Katso 16 sekunnin video normaalinopeudella](screenshots/landscape-scenes-demo.mp4)
+
+Maisemien valaistus seuraa **valittua aikavyöhykettä**. Aamu, päivä, ilta ja yö
+vaihtuvat paikallisen kellonajan mukaan ja värit liukuvat vähitellen.
+**Nopeutettu esikatselu** näyttää vuorokauden minuutissa muuttamatta työpöydän
+aikaa. Valitse GNOMEssa päivitysväliksi 1 minuutti, jos haluat valaistuksen
+virkistyvän minuutin välein; Windowsin liikkuva pinta seuraa aikaa automaattisesti.
+Maisemat sisältyvät sovellukseen ja toimivat ilman lisäpakettia tai verkkoyhteyttä.
+
+## Satunnaisvaihto valituista taustoista
+
+- **Vaihda satunnainen tausta nyt** vaihtaa käynnissä olevan taustan. Pysäytettynä se valitsee taustan esikatseluun.
+- **Valitse mukaan tulevat taustat…** avaa rastitettavan luettelon. Mukaan voi ottaa maisemat, taivasteemat, Otava-kuvat ja asennetun Ubuntu-kuvapaketin versiot.
+- **Vaihda taustaa satunnaisesti** ottaa automaattisen vaihdon käyttöön, kun tausta on käynnistetty. Aikavälit ovat 1, 5, 15, 26 tai 60 minuuttia.
+
+Nykyistä taustaa ei arvota heti uudelleen. Jatkuva vaihtelu tarvitsee vähintään
+kaksi käytettävissä olevaa valintaa. Ilman omaa rajausta arvotaan kaikista
+käytettävissä olevista taustoista. Ubuntu-versiot tarvitsevat kuvapaketin;
+vanhat Otava-maisemat tarvitsevat sijainnin 60–70° N. Valinnat säilyvät
+uudelleenkäynnistyksessä. **Pysäytä päivitys** pysäyttää myös satunnaisvaihdon.
+**Palauta aiempi tausta** palauttaa alkuperäisen taustan myös useiden vaihtojen jälkeen.
+
+## Taivasteemat
 
 Valitse teema **Taustakuvan tyyli** -valikosta. Uudet teemat sisältyvät
 sovellukseen ja toimivat ilman lisäpakettia tai verkkoyhteyttä.
@@ -43,8 +75,6 @@ Kuun laskenta huomioi havaintopaikan parallaksin. Nousu ja lasku ovat arvioita
 tasaiselle horisontille tavanomaisella taittumalla; paikallinen maasto ja sää
 vaikuttavat havaintoon. Joillakin päivillä ei ole nousua tai laskua kyseisellä
 paikalla, jolloin sovellus kertoo sen. Veri Ajan päiväraja on aina Suomen ajassa.
-
-Puro ja vuorokauden mukaan vaihtuva maisema jäävät myöhempään versioon.
 
 ## Windowsin lukituskuva
 
@@ -118,7 +148,7 @@ ohjelmalla piirrettyä tähteä edustavat laskettua taivasta; pohjakuvan sumut j
 Asenna ladattu paketti:
 
 ```bash
-sudo apt install ./veriyo-live_0.3.0_all.deb
+sudo apt install ./veriyo-live_0.4.0_all.deb
 ```
 
 Sovellus löytyy nimellä **Veriyö Live**. Komento: `veriyo-live`.
@@ -150,7 +180,7 @@ palautusyritystä varten.
 
 ## Lukitusnäytön ja live-kuvan rajat
 
-Otava-maisemat päivittyvät ajastetusti. Neljä uutta taivasteemaa sisältävät erikseen liikkuvia elementtejä. Ubuntu-kuvat ovat taustakuvakokoelma, johon ei luvata havaittavaa animaatiota.
+Otava-maisemat päivittyvät ajastetusti. Seitsemän maisema- ja taivasteemaa sisältävät erikseen liikkuvia elementtejä. Ubuntu-kuvat ovat taustakuvakokoelma, johon ei luvata havaittavaa animaatiota.
 Kumpikaan käyttöjärjestelmä ei takaa, että **jo näkyvissä oleva lukitusnäyttö**
 lataa kuvan uudelleen. Sitä ei väitetä jatkuvasti animoiduksi. Tietokoneen
 nukkuessa ei tehdä päivityksiä; herätessä asento korjataan.
@@ -228,7 +258,7 @@ henkilökohtaisia asetuksia, taustakuvan varmuuskopioita tai sovelluksen tietoja
 Päivityksen yhteydessä muuta `veriyo_live/__init__.py`-versionumero ja
 `packaging/launcher.rc`-versionumerot. `main`-haaran päivitys ajaa testit ja
 rakentaa paketit ladattaviksi Actionsin artefakteista. Version mukaisen tagin
-(esimerkiksi `v0.3.0`) julkaisu rakentaa molemmat käyttöjärjestelmäpaketit ja
+(esimerkiksi `v0.4.0`) julkaisu rakentaa molemmat käyttöjärjestelmäpaketit ja
 julkaisee ne yhdessä lähde-ZIP:n ja SHA256-tarkisteiden kanssa. Julkaisua ei
 tehdä, jos kumman tahansa käyttöjärjestelmän tarkistus epäonnistuu.
 

@@ -1,4 +1,4 @@
-"""Four offline, procedural scenes. Astronomy and decorative motion are separate."""
+"""Offline procedural scenes. Astronomy and decorative motion are separate."""
 from dataclasses import dataclass, replace
 from datetime import datetime, timezone
 from functools import lru_cache
@@ -20,6 +20,9 @@ SCENES = {
     'moon': ('Kuun kulkureitti', 'Todellinen kuunvaihe ja tämän päivän reitti. Reitin valopulssi on koristeellinen.'),
     'bloodwork': ('Veri Ajan taivaankoneisto', 'Seitsemän kehää, kiertävät sinetit ja 777 päivän mukana muuttuva hehku.'),
     'deep_space': ('Hiljainen avaruus', 'Leijuvia kivikappaleita, pehmeästi virtaavaa sumua ja kaukaisten maailmojen valoa.'),
+    'stream': ('Metsien puro', 'Virtaavaa vettä, sumua ja metsäkasvillisuutta. Aamu-, päivä-, ilta- ja yövalaistus kellonajan mukaan.'),
+    'rose_garden': ('Varjoruusujen puutarha', 'Goottilainen kasvihuone, elävät ruusut, leijuvat terälehdet ja sumussa häilyvä hahmo.'),
+    'lighthouse': ('Viimeinen majakka', 'Kiertävä valokeila, vieraan maailman meri, rengasplaneetta ja kaukainen varjo.'),
 }
 PERIOD = 96
 
@@ -316,13 +319,20 @@ def space_scene(p, w, h, phase):
 def render_scene(moment, settings, width, height, animation_seconds=None):
     seconds = moment.timestamp() if animation_seconds is None else animation_seconds
     phase = (seconds % PERIOD)/PERIOD*math.tau
-    image = backdrop(settings.theme, min(width,1920), min(height,1080)).scaled(
-        width,height,Qt.AspectRatioMode.IgnoreAspectRatio,Qt.TransformationMode.SmoothTransformation)
+    landscape=settings.theme in ('stream','rose_garden','lighthouse')
+    if landscape:
+        from .landscapes import render_landscape
+        image=render_landscape(moment,settings,width,height,phase)
+    else:
+        image = backdrop(settings.theme, min(width,1920), min(height,1080)).scaled(
+            width,height,Qt.AspectRatioMode.IgnoreAspectRatio,Qt.TransformationMode.SmoothTransformation)
     p = QPainter(image); p.setRenderHint(QPainter.RenderHint.Antialiasing)
     scale = min(width/1920, height/1080)
     p.scale(scale, scale); w, h = width/scale, height/scale
     try:
-        if settings.theme in ('polaris', 'moon'):
+        if landscape:
+            pass  # The landscape has its own scenery and optional caption.
+        elif settings.theme in ('polaris', 'moon'):
             if settings.theme == 'polaris':
                 chart(p, moment, settings, w, h, phase)
                 label(p, QRectF(w*.68, h*.28, w*.28, 40), 'POHJANTÄHDEN YÖ', 20, '#d5ddfa')
@@ -341,6 +351,10 @@ def render_scene(moment, settings, width, height, animation_seconds=None):
         if settings.theme != 'moon':
             title, lines = date_block(moment, settings.date_mode, ZoneInfo(settings.timezone))
             if lines:
+                if landscape:
+                    fade=QLinearGradient(w*.65,0,w*.99,0)
+                    fade.setColorAt(0,QColor(3,7,15,0));fade.setColorAt(.25,QColor(3,7,15,150));fade.setColorAt(1,QColor(3,7,15,100))
+                    p.fillRect(QRectF(w*.65,h*.57,w*.34,65+len(lines)*30),fade)
                 label(p, QRectF(w*.68, h*.60, w*.29, 30), title, 13, '#b2a2ce')
                 for i, line in enumerate(lines):
                     label(p, QRectF(w*.68, h*.65+i*30, w*.29, 28), line, 12)
