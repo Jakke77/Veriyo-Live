@@ -22,7 +22,7 @@ if os.name!='nt':raise SystemExit('Windows only')
 user=ctypes.WinDLL('user32',use_last_error=True)
 user.FindWindowW.argtypes=[wintypes.LPCWSTR,wintypes.LPCWSTR];user.FindWindowW.restype=wintypes.HWND
 from PyQt6.QtWidgets import QApplication
-from PyQt6.QtCore import qInstallMessageHandler
+from PyQt6.QtCore import qInstallMessageHandler,QCoreApplication,QEvent
 qInstallMessageHandler(lambda kind,context,message: print("Qt:",message,flush=True))
 from PyQt6.QtTest import QTest
 from veriyo_live.ubuntu_pack import MotionEntry
@@ -64,4 +64,5 @@ try:
         print('PASS: native WorkerW child created, rendered, left focus unchanged and closed safely',flush=True)
 finally:
     surface.shutdown();app.processEvents()
+    QCoreApplication.sendPostedEvents(None,QEvent.Type.DeferredDelete)
     if synthetic:user.DestroyWindow(synthetic)
