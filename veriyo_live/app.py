@@ -92,7 +92,7 @@ class Window(QMainWindow):
         title = QLabel('VERIYÖ LIVE')
         title.setObjectName('title')
         outer.addWidget(title)
-        subtitle = QLabel('Oma yötaivas tai Ubuntun rauhallisesti elävät oletustaustat.')
+        subtitle = QLabel('Liikkuvia taivasteemoja ja Ubuntun oletustaustakuvakokoelma.')
         subtitle.setObjectName('subtitle')
         subtitle.setWordWrap(True)
         outer.addWidget(subtitle)
@@ -113,6 +113,9 @@ class Window(QMainWindow):
         self.theme = QComboBox()
         self.theme.addItem('Veriyö · Otava ja järvi', 'otava')
         self.theme.addItem('Veriyö · Hiillos', 'hiillos')
+        from .scenes import SCENES
+        for key, (name, _) in SCENES.items():
+            self.theme.addItem(name, key)
         self.theme.addItem('Ubuntun oletustaustat', 'ubuntu')
         self.theme.setCurrentIndex(self.theme.findData(settings.theme))
         self.theme.currentIndexChanged.connect(self.refresh_preview)
@@ -126,7 +129,7 @@ class Window(QMainWindow):
         self.ubuntu_version.setCurrentIndex(self.ubuntu_version.findData(settings.ubuntu_version))
         self.ubuntu_version.setAccessibleName('Ubuntu-versio')
         self.ubuntu_version.currentIndexChanged.connect(self.change_ubuntu_version)
-        self.pack_button=QPushButton('Asenna live-paketti…')
+        self.pack_button=QPushButton('Asenna Ubuntu-kuvat…')
         self.pack_button.clicked.connect(self.install_pack)
         ubuntu_layout.addWidget(self.ubuntu_version,1);ubuntu_layout.addWidget(self.pack_button)
         form.addRow('Ubuntu-versio',self.ubuntu_row)
@@ -136,7 +139,7 @@ class Window(QMainWindow):
         location = QHBoxLayout()
         self.latitude, self.longitude = QDoubleSpinBox(), QDoubleSpinBox()
         for spin, minimum, maximum, value, label in (
-            (self.latitude, 60, 70, settings.latitude, 'Leveysaste pohjoista'),
+            (self.latitude, -90, 90, settings.latitude, 'Leveysaste pohjoista'),
             (self.longitude, -180, 180, settings.longitude, 'Pituusaste itään')):
             spin.setRange(minimum, maximum)
             spin.setDecimals(6)
@@ -146,6 +149,14 @@ class Window(QMainWindow):
             location.addWidget(spin)
         form.addRow('Sijainti · leveys / pituus', location)
         self.location_label=form.labelForField(location)
+        from zoneinfo import available_timezones
+        self.timezone=QComboBox(); self.timezone.setEditable(True)
+        self.timezone.addItems(sorted(available_timezones()))
+        self.timezone.setCurrentText(settings.timezone)
+        self.timezone.setAccessibleName('Sijainnin aikavyöhyke')
+        self.timezone.currentTextChanged.connect(self.refresh_preview)
+        form.addRow('Aikavyöhyke',self.timezone)
+        self.timezone_label=form.labelForField(self.timezone)
         flags = QHBoxLayout()
         self.guides = QCheckBox('Suunnat ja Alkaid')
         self.guides.setChecked(settings.guides)
@@ -179,7 +190,8 @@ class Window(QMainWindow):
         self.autostart.setChecked(settings.autostart)
         form.addRow('', self.autostart)
         outer.addWidget(form_widget)
-        hint = QLabel('Otava katsoo pohjoiseen: länsi vasemmalla, itä oikealla. Ubuntu-taustoissa näkyy kuvan oma rauhallinen liike. '
+        hint = QLabel('Otava-maisemissa katsotaan pohjoiseen. Uudet taivaskartat näyttävät koko näkyvän taivaan; sijainti ja aikavyöhyke valitaan itse. '
+            'Ubuntu-kuvat ovat taustakuvakokoelma; niihin ei luvata havaittavaa animaatiota. '
             'Lukituskuva on pysäytyskuva; GNOME käyttää usein työpöydän kuvaa myös lukituksen pohjana. '
             'Tämä versio tekee saman kuvan kaikille näytöille päänäytön tarkkuudella.')
         hint.setWordWrap(True)
@@ -225,10 +237,10 @@ class Window(QMainWindow):
         return Settings(theme=self.theme.currentData(), latitude=self.latitude.value(), longitude=self.longitude.value(),
                         guides=self.guides.isChecked(), date_mode=self.date_mode.currentData(), interval=self.interval.currentData(),
                         lock_screen=self.lock.isChecked(), autostart=self.autostart.isChecked(),
-                        ubuntu_version=self.ubuntu_version.currentData()).validate()
+                        ubuntu_version=self.ubuntu_version.currentData(),timezone=self.timezone.currentText()).validate()
 
     def install_pack(self):
-        path,_=QFileDialog.getOpenFileName(self,'Asenna '+PACK_NAME,'','Ubuntu live -paketti (*.zip)')
+        path,_=QFileDialog.getOpenFileName(self,'Asenna Ubuntu-kuvat: '+PACK_NAME,'','Ubuntu-kuvapaketti (*.zip)')
         if not path:return
         self.show_status('Asennetaan live-pakettia ja tarkistetaan kuvat…')
         self.pack_worker=Task('pack-install',lambda:self.library.install(path),self)
@@ -239,7 +251,7 @@ class Window(QMainWindow):
         worker=self.pack_worker;self.pack_worker=None
         error=worker.error;worker.deleteLater()
         self.refresh_preview();self.update_controls()
-        self.show_status('Asennus ei onnistunut: '+error if error else 'Ubuntu live -paketti asennettu · 45 versiota valittavana.')
+        self.show_status('Asennus ei onnistunut: '+error if error else 'Ubuntu-kuvapaketti asennettu · 45 versiota valittavana.')
 
     def sync_motion_desktop(self):
         active=(os.name=='nt' and self.engine.running and self.engine.motion_entry is not None and
@@ -251,6 +263,8 @@ class Window(QMainWindow):
                 from .windows_motion import MotionDesktop
                 self.motion_desktop=MotionDesktop(self.engine.motion_entry,self.motion_error)
             except Exception as error:self.motion_error(str(error))
+        elif active and self.motion_desktop is not None:
+            self.motion_desktop.entry=self.engine.motion_entry
 
     def motion_error(self,message):
         self.motion_failure=message
@@ -319,8 +333,13 @@ class Window(QMainWindow):
         if not hasattr(self,'save_button'):return
         active = self.engine.running or self.engine.busy or self.pack_worker is not None
         ubuntu=self.theme.currentData()=='ubuntu'
+        from .scenes import SCENES
+        scene=self.theme.currentData() in SCENES
+        location=self.theme.currentData() in ('otava','hiillos','polaris','moon')
+        self.latitude.setRange(60 if self.theme.currentData() in ('otava','hiillos') else -90,
+                               70 if self.theme.currentData() in ('otava','hiillos') else 90)
         for widget in (self.theme, self.latitude, self.longitude, self.guides, self.interval, self.lock,
-                       self.autostart, self.save_button,self.ubuntu_version,self.pack_button):
+                       self.autostart, self.save_button,self.ubuntu_version,self.pack_button,self.timezone):
             widget.setEnabled(not active)
         for widget in (self.latitude,self.longitude,self.guides,self.interval):
             widget.setEnabled(not active and not ubuntu)
@@ -331,6 +350,13 @@ class Window(QMainWindow):
         self.ubuntu_version.setEnabled(self.pack_worker is None)
         for widget in (self.demo,self.time_label,self.latitude,self.longitude,self.location_label,self.guides,
                        self.guides_label,self.date_mode,self.date_label,self.interval):widget.setVisible(not ubuntu)
+        for widget in (self.latitude,self.longitude,self.location_label):widget.setVisible(location)
+        self.timezone.setVisible(scene);self.timezone_label.setVisible(scene)
+        self.motion_label.setVisible(ubuntu or scene)
+        self.guides.setText('Suunnat ja tähtinimet' if scene else 'Suunnat ja Alkaid')
+        self.start_button.setText('Ota taustakuva käyttöön' if ubuntu else 'Ota elävä tausta käyttöön')
+        self.demo.setVisible(self.theme.currentData() in ('otava','hiillos','polaris','moon'))
+        if self.demo.isHidden() and self.demo.isChecked():self.demo.setChecked(False)
         self.interval_label.setText('Lukituskuva' if ubuntu else 'Päivitysväli')
         self.start_button.setEnabled(not active)
         self.stop_button.setEnabled(self.engine.running)
@@ -345,12 +371,13 @@ class Window(QMainWindow):
         if not self.isVisible():
             return  # A hidden tray process only renders its scheduled wallpaper updates.
         now = datetime.now(timezone.utc)
+        from .scenes import SCENES
         if self.theme.currentData()=='ubuntu':
             self.refresh_preview(moment=now);return
         if self.demo_start is not None:
             import time
             now = self.demo_start[1] + timedelta(seconds=(time.monotonic()-self.demo_start[0])*1440)
-        elif self.last_preview_second == int(now.timestamp()):
+        elif self.last_preview_second == int(now.timestamp()) and self.theme.currentData() not in SCENES:
             return
         self.last_preview_second = int(now.timestamp())
         self.refresh_preview(moment=now)
@@ -360,17 +387,21 @@ class Window(QMainWindow):
             return
         try:
             value = self.values()
+            from .scenes import SCENES
             if value.theme=='ubuntu':
-                self.motion_label.setText(next(entry['motion_label'] for entry in catalog() if entry['version']==value.ubuntu_version))
+                self.motion_label.setText('Ubuntu-taustakuvakokoelma · animaatiota ei luvata.')
+            elif value.theme in SCENES:
+                self.motion_label.setText(SCENES[value.theme][1])
             elif value.theme not in self.backgrounds:
                 self.backgrounds[value.theme] = QImage(str(ASSETS/(value.theme+'.png')))
             moment = moment or datetime.now(timezone.utc)
-            self.preview.update_image(render(moment, value, 1280, 720, self.backgrounds.get(value.theme),library=self.library))
+            self.preview.update_image(render(moment, value, 1280, 720, self.backgrounds.get(value.theme),library=self.library,
+                                             animation_seconds=datetime.now(timezone.utc).timestamp()))
             local = moment.astimezone(ZONE)
             self.time_label.setText(('ESIKATSELU · ' if self.demo.isChecked() else '') + f'{local:%d.%m.%Y %H:%M:%S} {local.tzname()}')
         except Exception as error:
             if self.theme.currentData()=='ubuntu':
-                self.preview.frame=None;self.preview.clear();self.preview.setText('Asenna Ubuntu live -paketti näyttääksesi tämän taustan.')
+                self.preview.frame=None;self.preview.clear();self.preview.setText('Asenna Ubuntu-kuvapaketti näyttääksesi tämän taustan.')
             self.show_status(str(error))
 
     def export(self):
@@ -397,7 +428,7 @@ class Window(QMainWindow):
         elif self.tray and (self.engine.running or self.engine.busy):
             self.hide()
             event.ignore()
-        elif self.engine.busy or self.pack_worker is not None or (self.engine.running and self.engine.settings.theme=='ubuntu'):
+        elif self.engine.busy or self.pack_worker is not None or (self.engine.running and self.engine.motion_entry is not None):
             self.quit()
             event.ignore()
         else:

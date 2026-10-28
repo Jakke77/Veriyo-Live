@@ -169,10 +169,7 @@ jobs:
                   files.append(target)
           assert len(files)==5,'Expected application packages, source ZIP and both Ubuntu live pack archives'
           (output/'SHA256SUMS').write_text(''.join(sha256(p.read_bytes()).hexdigest()+'  '+p.name+'\n' for p in sorted(files)))
-          notes='Veriyö Live '+VERSION+' — Ubuntu GNOME ja Windows 10/11.\n\n'
-          notes+='Paketit on rakennettu ja tarkistettu molemmilla käyttöjärjestelmillä. Käyttöohjeet ja lukitusnäytön rajat ovat repon README.md-tiedostossa.\n\n'
-          notes+='Windows: pura koko ZIP ja avaa Veriyo-Live.exe. Ubuntu: sudo apt install ./veriyo-live_'+VERSION+'_all.deb\n\n'
-          notes+='Ubuntu-taustat: lataa Ubuntu-Live-Pack-1.0.0.zip, valitse sovelluksessa Ubuntun oletustaustat ja paina Asenna live-paketti. Valitse sitten Ubuntu-versio ja ota tausta käyttöön. Originals-ZIP on kehitysaineistoa.\n'
+          notes=Path('packaging/release-notes.md').read_text(encoding='utf-8')
           Path('release-notes.md').write_text(notes)
           PY
       - name: Publish verified packages

@@ -1,0 +1,45 @@
+{
+  "source": "Astropy 7.1 builtin ephemeris / ERFA; pressure=0, elevation=0, auto_download=False",
+  "cases": [
+    {
+      "utc": "2026-10-28T19:00:00+00:00",
+      "latitude": 65.071562,
+      "longitude": 25.507046,
+      "altitude": 27.102898941652793,
+      "azimuth": 85.77472817491311,
+      "illumination": 0.9052841651123655
+    },
+    {
+      "utc": "2026-11-05T02:30:00+00:00",
+      "latitude": -33.8688,
+      "longitude": 151.2093,
+      "altitude": 23.284112727278714,
+      "azimuth": 288.300956882792,
+      "illumination": 0.17509602764215604
+    },
+    {
+      "utc": "2026-11-09T12:00:00+00:00",
+      "latitude": 0,
+      "longitude": 0,
+      "altitude": 67.07446717504438,
+      "azimuth": 187.56120207584758,
+      "illumination": 0.002303561326565118
+    },
+    {
+      "utc": "2026-11-24T12:00:00+00:00",
+      "latitude": 40.7128,
+      "longitude": -74.006,
+      "altitude": -0.02447729760147788,
+      "azimuth": 303.05404713645817,
+      "illumination": 0.9979063454975894
+    },
+    {
+      "utc": "2026-03-29T01:30:00+00:00",
+      "latitude": 65.071562,
+      "longitude": 25.507046,
+      "altitude": 13.276614772643049,
+      "azimuth": 278.46737360736194,
+      "illumination": 0.8324615517246514
+    }
+  ]
+}

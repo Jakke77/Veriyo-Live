@@ -7,6 +7,7 @@ from PyQt6.QtCore import Qt, QTimer, QRectF
 from PyQt6.QtGui import QPainter
 from PyQt6.QtWidgets import QWidget
 from .ubuntu_pack import draw_motion
+from .scenes import SceneEntry, render_entry
 
 
 class DesktopSurfaceUnavailable(RuntimeError):
@@ -113,7 +114,12 @@ class MotionDesktop(QWidget):
     def paintEvent(self,event):
         painter=QPainter(self)
         painter.setRenderHint(QPainter.RenderHint.SmoothPixmapTransform)
-        try:draw_motion(painter,self.entry,time.time(),QRectF(self.rect()))
+        try:
+            if isinstance(self.entry, SceneEntry):
+                image=render_entry(self.entry,time.time(),self.width(),self.height())
+                painter.drawImage(QRectF(self.rect()),image)
+            else:
+                draw_motion(painter,self.entry,time.time(),QRectF(self.rect()))
         except Exception as error:
             self.timer.stop();self.hide()
             QTimer.singleShot(0,lambda message=str(error):self.on_error(message))

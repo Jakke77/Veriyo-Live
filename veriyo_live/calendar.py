@@ -20,7 +20,7 @@ def blood_label(moment):
             f'Vuoden päivä {position + 1}/777')
 
 
-def date_block(moment, mode):
+def date_block(moment, mode, zone=ZONE):
     """All wallpaper dates belong to this optional block, never the footer."""
     if mode == 'none':
         return '', ()
@@ -28,7 +28,7 @@ def date_block(moment, mode):
         raise ValueError('Tuntematon päivämäärän näyttötapa.')
     if moment.tzinfo is None or moment.utcoffset() is None:
         raise ValueError('Aikaleima tarvitsee aikavyöhykkeen.')
-    local = moment.astimezone(ZONE)
+    local = moment.astimezone(zone)
     civil = f'{local:%d.%m.%Y} · klo {local:%H:%M} {local.tzname()}'
     if mode == 'gregorian':
         weekdays = ('Maanantai', 'Tiistai', 'Keskiviikko', 'Torstai', 'Perjantai', 'Lauantai', 'Sunnuntai')

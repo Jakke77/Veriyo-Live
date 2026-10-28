@@ -8,6 +8,7 @@ from PyQt6.QtCore import QObject, QThread, QTimer, pyqtSignal
 from .platforms import WallpaperSession, backend
 from .render import render
 from .ubuntu_pack import PackLibrary, render_motion, write_gnome_slideshow
+from .scenes import SCENES, SceneEntry, build_slideshow, render_entry
 
 
 class Task(QThread):
@@ -85,6 +86,28 @@ class Engine(QObject):
         self._launch('start', begin)
 
     def _update(self):
+        if self.settings.theme in SCENES:
+            moment = datetime.now(timezone.utc)
+            self.slot = 1-self.slot
+            self.directory.mkdir(parents=True, exist_ok=True)
+            if self.session.adapter.kind == 'gnome':
+                entry, path = build_slideshow(moment, self.settings, *self.size, self.directory, self.slot)
+                self.session.apply_paths(path, entry.frames[0])
+            else:
+                path = self.directory/f'scene-poster-{self.slot}.jpg'
+                temporary = self.directory/f'.scene-poster-{self.slot}.jpg'
+                if not render(moment, self.settings, *self.size).save(str(temporary), 'JPEG', 94):
+                    raise RuntimeError('Taivasteeman pysäytyskuvan tallennus epäonnistui.')
+                os.replace(temporary, path)
+                self.session.apply(path, self.settings.lock_screen)
+                # Keep a stable native actor on periodic lock/poster updates.
+                entry = SceneEntry(replace(self.settings))
+                if self.motion_entry == entry:
+                    entry = self.motion_entry
+            self.motion_entry = entry
+            self.last_update = time.monotonic()
+            self.last_wall_time = moment.timestamp()
+            return
         if self.settings.theme=='ubuntu':
             entry=self.library.entry(self.settings.ubuntu_version)
             if self.session.adapter.kind=='gnome':
@@ -144,7 +167,7 @@ class Engine(QObject):
         self._launch('update',self._update)
 
     def stop(self):
-        freeze=self.running and self.settings is not None and self.settings.theme=='ubuntu'
+        freeze=self.running and self.settings is not None and (self.settings.theme=='ubuntu' or self.settings.theme in SCENES)
         self.running = False
         self.stop_requested = True
         if freeze:self.pending_freeze=True
@@ -157,9 +180,10 @@ class Engine(QObject):
         if self.motion_entry is None:return
         def freeze():
             if self.session.can_resume():
-                image=render_motion(self.motion_entry,time.time(),*self.size)
-                path=self.directory/'ubuntu-paused.jpg'
-                temporary=self.directory/'.ubuntu-paused.jpg'
+                image=render_entry(self.motion_entry,time.time(),*self.size)
+                name='ubuntu-paused' if self.settings.theme=='ubuntu' else 'scene-paused'
+                path=self.directory/(name+'.jpg')
+                temporary=self.directory/('.'+name+'.jpg')
                 if not image.save(str(temporary),'JPEG',95):
                     raise RuntimeError('Pysäytyskuvan tallentaminen ei onnistunut.')
                 os.replace(temporary,path)
@@ -202,7 +226,9 @@ class Engine(QObject):
                 self.status.emit('Aiempi tausta palautettu. Muualla valitsemaasi uutta työpöytäkuvaa ei korvata.')
         elif self.running:
             if self.settings.theme=='ubuntu':
-                message = f'Ubuntu {self.settings.ubuntu_version} · rauhallinen 48 sekunnin live-silmukka käytössä'
+                message = f'Ubuntu {self.settings.ubuntu_version} · taustakuvakokoelma käytössä · animaatiota ei luvata'
+            elif self.settings.theme in SCENES:
+                message = SCENES[self.settings.theme][0] + ' · liikkuva tausta käytössä'
             else:
                 message = f'Elävä tausta käytössä · päivitys {self.settings.interval // 60} min välein'
             if self.session.warning:
