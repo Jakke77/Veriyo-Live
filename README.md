@@ -10,7 +10,14 @@ Maisema pysyy paikallaan, Otava seuraa oikeaa tähtitaivasta. Mukana Veri Ajan
 
 ![Veriyö Live työpöydällä](screenshots/taustakuva.png)
 
-## Versio 0.2.0
+## Versio 0.2.1
+
+Windowsin hylkäämä lukituskuva ei enää pysäytä työpöytätaustaa tai Ubuntu-kuvien
+live-liikettä. Sovellus näyttää lyhyen ilmoituksen ja jatkaa työpöydän päivittämistä.
+Lukituskuvaa ei yritetä uudelleen jokaisella päivityksellä. Myös lukituskuvan
+varmuuskopioinnin epäonnistuessa työpöytä toimii; lukituskuvaa ei silloin muuteta.
+Vanhan 0.2.0-version epäonnistuneesta vaihdosta voi jatkaa poistamalla
+**Päivitä myös lukituskuvaa** -valinnan; aiempi varmuuskopio säilyy palautusta varten.
 
 Oma taustakuvasovellus Windows 10/11:lle ja Ubuntu GNOME:lle. Maisema pysyy paikallaan,
 seitsemän oikeaa Otavan tähteä liikkuu antamasi paikan tähtitaivaan mukana.
@@ -80,7 +87,7 @@ ohjelmalla piirrettyä tähteä edustavat laskettua taivasta; pohjakuvan sumut j
 Asenna ladattu paketti:
 
 ```bash
-sudo apt install ./veriyo-live_0.2.0_all.deb
+sudo apt install ./veriyo-live_0.2.1_all.deb
 ```
 
 Sovellus löytyy nimellä **Veriyö Live**. Komento: `veriyo-live`.
@@ -104,6 +111,11 @@ Ennen ensimmäistä vaihtoa sovellus yrittää tallentaa nykyisen lukituskuvan; 
 varmuuskopiointi ei onnistu, vaihtoa ei tehdä. Spotlight- tai diaesitysvalintaa
 sovellus ei voi palauttaa kuvatiedostosta: valitse se tarvittaessa Windowsin omista
 **Mukauttaminen → Lukitusnäyttö** -asetuksista. Yrityskäytäntöjä ei ohiteta.
+Jos Windows hylkää automaattisen vaihdon, käytä **Tallenna kuva…** -painiketta ja
+valitse kuva itse kohdassa **Asetukset → Mukauttaminen → Lukitusnäyttö → Kuva**.
+Tämä ei estä työpöytätaustan toimintaa. Jos aiemman lukituskuvan palautuskin
+hylätään, työpöytä palautetaan ja lukituskuvan varmuuskopio säilytetään myöhempää
+palautusyritystä varten.
 
 ## Lukitusnäytön ja live-kuvan rajat
 
@@ -186,7 +198,7 @@ henkilökohtaisia asetuksia, taustakuvan varmuuskopioita tai sovelluksen tietoja
 Päivityksen yhteydessä muuta `veriyo_live/__init__.py`-versionumero ja
 `packaging/launcher.rc`-versionumerot. `main`-haaran päivitys ajaa testit ja
 rakentaa paketit ladattaviksi Actionsin artefakteista. Version mukaisen tagin
-(esimerkiksi `v0.2.0`) julkaisu rakentaa molemmat käyttöjärjestelmäpaketit ja
+(esimerkiksi `v0.2.1`) julkaisu rakentaa molemmat käyttöjärjestelmäpaketit ja
 julkaisee ne yhdessä lähde-ZIP:n ja SHA256-tarkisteiden kanssa. Julkaisua ei
 tehdä, jos kumman tahansa käyttöjärjestelmän tarkistus epäonnistuu.
 

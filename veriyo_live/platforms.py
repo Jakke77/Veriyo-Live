@@ -11,6 +11,24 @@ import sys
 from .settings import atomic_json
 
 
+class LockScreenError(RuntimeError):
+    """A refused/failed optional Windows lock image, separate from desktop errors."""
+    def __init__(self, code='failed'):
+        self.unchanged = code in {'unsupported', 'rejected', 'backup'}
+        messages = {
+            'unsupported': 'Windows ei salli lukituskuvan automaattista vaihtamista.',
+            'rejected': 'Windows ei hyväksynyt lukituskuvaa.',
+            'backup': 'Nykyistä lukituskuvaa ei voitu varmuuskopioida; sitä ei muuteta.',
+        }
+        super().__init__(messages.get(code, 'Windowsin lukituskuvatoiminto ei onnistunut.'))
+
+
+def lock_warning(error):
+    return (str(error) + ' Lukituskuvan automaattinen päivitys on keskeytetty; '
+            'työpöytätausta toimii edelleen. Voit valita kuvan itse: Tallenna kuva… → '
+            'Windowsin Asetukset → Mukauttaminen → Lukitusnäyttö → Kuva.')
+
+
 def run(arguments, timeout=20):
     result = subprocess.run(arguments, capture_output=True, text=True, encoding='utf-8',
                             errors='replace', timeout=timeout,
@@ -128,18 +146,29 @@ class WindowsBackend:
 
     def lock(self, operation, path):
         helper = Path(__file__).resolve().parent / 'lock-screen.ps1'
-        return run(['powershell.exe', '-NoProfile', '-NonInteractive', '-ExecutionPolicy', 'Bypass',
-                    '-File', str(helper), '-Operation', operation, '-ImagePath', str(path)], timeout=30)
+        try:
+            return run(['powershell.exe', '-NoProfile', '-NonInteractive', '-ExecutionPolicy', 'Bypass',
+                        '-File', str(helper), '-Operation', operation, '-ImagePath', str(path)], timeout=30)
+        except (RuntimeError, OSError, subprocess.TimeoutExpired) as error:
+            # Display our bounded diagnostic, never a PowerShell stack/path dump.
+            code = next((code for code in ('unsupported', 'rejected', 'backup')
+                         if 'VERIYO_LOCK:' + code in str(error)), 'failed')
+            raise LockScreenError(code) from error
 
     def capture(self, lock_screen, directory):
-        result = {'kind': self.kind, 'desktop': self.desktop_path(), 'lock_backup': '', 'frames': []}
+        result = {'kind': self.kind, 'desktop': self.desktop_path(), 'lock_backup': '',
+                  'lock_restore_needed': False, 'frames': []}
         if lock_screen:
             backup = Path(directory) / 'previous-lock.jpg'
             # Refuse to change a lock screen which cannot be backed up.
-            self.lock('Backup', backup)
-            if not backup.is_file():
-                raise RuntimeError('Aiemman lukituskuvan varmuuskopiointi ei onnistunut. Käytä kuvan tallennusta ja Windowsin asetuksia.')
-            result['lock_backup'] = str(backup)
+            try:
+                self.lock('Backup', backup)
+                if not backup.is_file():
+                    raise LockScreenError('backup')
+                result['lock_backup'] = str(backup)
+            except LockScreenError:
+                result['lock_disabled'] = True
+                result['lock_warning'] = lock_warning(LockScreenError('backup'))
         return result
 
     def apply(self, path, lock_screen, journal):
@@ -157,7 +186,7 @@ class WindowsBackend:
         owned = [os.path.normcase(str(Path(p).resolve())) for p in journal['frames']]
         if current in owned:
             self.set_desktop(journal['desktop'])
-        if journal.get('lock_backup'):
+        if journal.get('lock_backup') and journal.get('lock_restore_needed', True):
             self.lock('Set', journal['lock_backup'])
 
 
@@ -171,19 +200,29 @@ class WallpaperSession:
         self.directory = Path(directory)
         self.path = self.directory / 'wallpaper-backup.json'
         self.adapter = adapter
+        self.warning = ''
 
     def begin(self, lock_screen):
         if self.path.exists():
             value = json.loads(self.path.read_text(encoding='utf-8'))
-            if value['kind'] != self.adapter.kind or value['lock_screen'] != lock_screen:
+            if value['kind'] != self.adapter.kind:
                 raise RuntimeError('Palauta aiempi tausta ennen lukituskuvavalinnan muuttamista.')
+            if value['lock_screen'] != lock_screen:
+                # Let a Windows user turn off an optional failed lock update,
+                # including recovery from 0.2.0. Keep the original backup intact.
+                if self.adapter.kind != 'windows' or lock_screen:
+                    raise RuntimeError('Palauta aiempi tausta ennen lukituskuvavalinnan muuttamista.')
+                value['lock_screen'] = False
             if not self.adapter.can_resume(value):
                 raise RuntimeError('Taustakuva on vaihtunut toisessa ohjelmassa. Paina ensin Palauta aiempi tausta; muualla valittu työpöytäkuva säilytetään.')
+            atomic_json(self.path, value)
+            self.warning = value.get('lock_warning', '') if lock_screen else ''
             return  # Resume across login/restart without replacing the original backup.
         self.directory.mkdir(parents=True, exist_ok=True)
         value = self.adapter.capture(lock_screen, self.directory)
         value['lock_screen'] = lock_screen
         atomic_json(self.path, value)
+        self.warning = value.get('lock_warning', '')
 
     def apply(self, path, lock_screen):
         value = json.loads(self.path.read_text(encoding='utf-8'))
@@ -192,8 +231,24 @@ class WallpaperSession:
             value['frames'].append(frame)
         # Register intended frame before either desktop/lock changes. Recovery can
         # recognise both the old frame and a partially applied next frame.
+        windows_lock = self.adapter.kind == 'windows' and lock_screen and not value.get('lock_disabled')
+        previous_restore = value.get('lock_restore_needed', bool(value.get('lock_backup')))
+        if windows_lock:
+            # A process crash during WinRT must still leave a restorable backup.
+            value['lock_restore_needed'] = True
         atomic_json(self.path, value)
-        self.adapter.apply(frame, lock_screen, value)
+        try:
+            self.adapter.apply(frame, lock_screen and not value.get('lock_disabled'), value)
+        except LockScreenError as error:
+            if self.adapter.kind != 'windows':
+                raise
+            # The desktop was applied; a refused optional lock image must not
+            # stop the live actor or cause repeated lock attempts on every tick.
+            value['lock_disabled'] = True
+            value['lock_warning'] = self.warning = lock_warning(error)
+            if error.unchanged:
+                value['lock_restore_needed'] = previous_restore
+            atomic_json(self.path, value)
 
     def apply_paths(self, desktop_path, lock_path):
         value=json.loads(self.path.read_text(encoding='utf-8'))
@@ -208,12 +263,21 @@ class WallpaperSession:
         return self.adapter.can_resume(value)
 
     def restore(self):
+        self.warning = ''
         if not self.path.exists():
             return
         value = json.loads(self.path.read_text(encoding='utf-8'))
         if value['kind'] != self.adapter.kind:
             raise RuntimeError('Varmuuskopio kuuluu toiselle käyttöjärjestelmälle.')
-        self.adapter.restore(value)
+        try:
+            self.adapter.restore(value)
+        except LockScreenError as error:
+            if self.adapter.kind != 'windows':
+                raise
+            self.warning = (str(error) + ' Aiemman lukituskuvan varmuuskopio säilytetään. '
+                            'Valitse lukituskuva Windowsin omista mukautusasetuksista; '
+                            'palautusta voi yrittää myöhemmin uudelleen.')
+            return  # The desktop is restored, but lock recovery is still pending.
         self.path.unlink()  # A failed restoration deliberately retains recovery data.
 
 
