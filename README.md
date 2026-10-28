@@ -10,11 +10,44 @@ Maisema pysyy paikallaan, Otava seuraa oikeaa tähtitaivasta. Mukana Veri Ajan
 
 ![Veriyö Live työpöydällä](screenshots/taustakuva.png)
 
-## Versio 0.1.2
+## Versio 0.2.0
 
 Oma taustakuvasovellus Windows 10/11:lle ja Ubuntu GNOME:lle. Maisema pysyy paikallaan,
 seitsemän oikeaa Otavan tähteä liikkuu antamasi paikan tähtitaivaan mukana.
 Ohjelma toimii kokonaan ilman verkkoyhteyttä ja ilman Ajanlaskut ja Sää -asennusta.
+
+## Ubuntu live -paketti · 45 versiota
+
+1. Lataa julkaisuista sovelluksen lisäksi **Ubuntu-Live-Pack-1.0.0.zip**.
+2. Avaa Veriyö Live ja valitse **Taustakuvan tyyli → Ubuntun oletustaustat**.
+3. Paina **Asenna live-paketti…** ja valitse ladattu ZIP. Paketti tarkistetaan ja asennetaan paikallisesti.
+4. Valitse erillisestä **Ubuntu-versio**-valikosta haluamasi kuva ja paina **Ota elävä tausta käyttöön**.
+
+Mukana ovat kaikki artikkelin 45 Ubuntu-versiota 4.10–26.10. Versioilla 14.04
+ja 14.10 on sama alkuperäinen tausta, ja molemmat löytyvät valikosta. Eläinhahmot
+hengittävät tai keinuvat hyvin vähän, meduusan lonkerot aaltoilevat ja abstraktit
+muodot virtaavat hitaasti. Kuvaan lisätään vain muutaman pikselin paikallista
+liikettä; 48 sekunnin silmukka jatkuu saumattomasti. Alkuperäiset värit säilyvät.
+Ubuntu-kuvien päällä ei näy Otavaa, kalenteria tai koordinaatteja.
+
+Voit vaihtaa **Ubuntu-versiota myös taustan ollessa käytössä**. Valinta tallentuu
+ja vaihtaa kohtauksen. Muihin taustatyyleihin vaihdettaessa pysäytä päivitys ensin.
+Paketti toimii asennuksen jälkeen ilman verkkoyhteyttä. Sovelluksen perusasennus
+pysyy pienenä: live-kuvat asennetaan erilliseen `packs`-kansioon sovelluksen tietojen alle.
+
+Ubuntu GNOME käyttää omaa XML-taustakuvasiirtymää: lisäosaa, videotoistinta tai
+jatkuvaa levyyn kirjoittamista ei tarvita. Windows käyttää Explorerin WorkerW-
+pintaan sijoitettua hiirtä ja näppäimistöä kaappaamatonta taustapintaa, joka
+piirtää rauhallisia siirtymiä 10 kertaa sekunnissa ja taukoaa lukituksen ajaksi.
+Windowsin näkyvä WorkerW-tuki riippuu Explorer-istunnosta; jos pinta ei ole
+saatavilla, ohjelma jättää pysäytyskuvan ja näyttää syyn. Molemmissa käyttöjärjestelmissä
+**Pysäytä päivitys** pysäyttää liikkeen kuvaan ja **Palauta aiempi tausta** palauttaa varmuuskopion.
+Lukitusnäyttöön valmistellaan pysäytyskuva, ei jatkuvaa animaatiota.
+
+Kuvien alkuperäiset tekijämerkinnät ja lisenssitiedot ovat lisäpaketin
+`LICENSES`-kansiossa. [Alkuperäiskuvien artikkeli](https://www.spacebar.news/ubuntu-linux-default-wallpapers/).
+Tämä on itsenäinen fanisovitus, ei Canonicalin virallinen live-taustapaketti.
+Lisäksi julkaisuissa on alkuperäiskuvat ja lähdetiedot sisältävä ZIP kehitystä varten.
 
 ## Käyttö
 
@@ -43,7 +76,7 @@ ohjelmalla piirrettyä tähteä edustavat laskettua taivasta; pohjakuvan sumut j
 Asenna ladattu paketti:
 
 ```bash
-sudo apt install ./veriyo-live_0.1.2_all.deb
+sudo apt install ./veriyo-live_0.2.0_all.deb
 ```
 
 Sovellus löytyy nimellä **Veriyö Live**. Komento: `veriyo-live`.
@@ -61,7 +94,7 @@ Pythonia tai järjestelmänvalvojan oikeuksia ei tarvita. **Luo-pikakuvakkeet.cm
 tekee pikakuvakkeet vain tämän käyttäjän työpöydälle ja Käynnistä-valikkoon.
 **Tarkista-toiminta.cmd** ajaa mukana tulevat testit muuttamatta taustakuvaa.
 
-Windowsin työpöytä käyttää järjestelmän omaa taustakuvatoimintoa. Lukituskuvan
+Veriyö-kuvien päivitys käyttää Windowsin omaa taustakuvatoimintoa; Ubuntu live -kuvien liike käyttää yllä kuvattua WorkerW-pintaa. Lukituskuvan
 vaihto käyttää käyttäjäkohtaista Windows WinRT -toimintoa, jos Windows sallii sen.
 Ennen ensimmäistä vaihtoa sovellus yrittää tallentaa nykyisen lukituskuvan; jos
 varmuuskopiointi ei onnistu, vaihtoa ei tehdä. Spotlight- tai diaesitysvalintaa
@@ -70,8 +103,7 @@ sovellus ei voi palauttaa kuvatiedostosta: valitse se tarvittaessa Windowsin omi
 
 ## Lukitusnäytön ja live-kuvan rajat
 
-Tämä ensimmäinen versio on **ajastetusti päivittyvä taustakuva**, ei video eikä
-60 FPS -animaatio. Tähtien todellinen hidas liike ei tarvitse videotoistoa.
+**Veriyö-taivaskuvat** ovat ajastetusti päivittyviä taustakuvia. **Ubuntu live -kuvat** käyttävät jatkuvaa rauhallista siirtymää. Tähtien todellinen hidas liike ei tarvitse videotoistoa.
 Avoimen sovelluksen esikatselu päivittyy normaalisti kerran sekunnissa ja
 nopeutettuna 10 kertaa sekunnissa; työpöytä päivittyy 1, 5 tai 26 minuutin välein.
 Kumpikaan käyttöjärjestelmä ei takaa, että **jo näkyvissä oleva lukitusnäyttö**
@@ -105,8 +137,7 @@ Tiedot ovat erillään Ajanlaskut ja Sää -asetuksista:
 - Ubuntu: `~/.local/share/veriyo-live/` (tai XDG_DATA_HOME).
 - Windows: `%LOCALAPPDATA%\VeriyoLive\`.
 
-Vain kaksi vaihtuvaa JPEG-kuvaa säilytetään, joten päivitykset eivät kasvata
-kuva-arkistoa loputtomasti. Viimeisin kuvatiedosto säilytetään lopetettaessa.
+Veriyö-päivitykset käyttävät kahta vaihtuvaa JPEG-kuvaa. Ubuntu live -paketti sisältää ennalta lasketut avainkuvat; se ei kirjoita uusia kuvia levylle jatkuvasti. Päivitykset eivät kasvata kuva-arkistoa loputtomasti. Viimeisin kuvatiedosto säilytetään lopetettaessa.
 
 ## Lähdekoodista ja kuvan viennistä
 
@@ -152,7 +183,7 @@ henkilökohtaisia asetuksia, taustakuvan varmuuskopioita tai sovelluksen tietoja
 Päivityksen yhteydessä muuta `veriyo_live/__init__.py`-versionumero ja
 `packaging/launcher.rc`-versionumerot. `main`-haaran päivitys ajaa testit ja
 rakentaa paketit ladattaviksi Actionsin artefakteista. Version mukaisen tagin
-(esimerkiksi `v0.1.2`) julkaisu rakentaa molemmat käyttöjärjestelmäpaketit ja
+(esimerkiksi `v0.2.0`) julkaisu rakentaa molemmat käyttöjärjestelmäpaketit ja
 julkaisee ne yhdessä lähde-ZIP:n ja SHA256-tarkisteiden kanssa. Julkaisua ei
 tehdä, jos kumman tahansa käyttöjärjestelmän tarkistus epäonnistuu.
 
@@ -162,3 +193,15 @@ Oma ohjelmakoodi: [MIT](LICENSE). Riippuvuuksien ja kuvituksen ehdot sekä
 tekijämerkinnät: [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 Julkinen repo ei muuta kolmansien osapuolten tai taustakuvien lisenssiehtoja.
 [Projektin alkuperä](docs/ALKUPERA.md).
+
+
+### Ubuntu-kuvien lähderakennus
+
+`tools/build_ubuntu_pack.py` hakee alkuperäiskuvat manifestin osoitteista,
+tarkistaa niiden SHA256-arvot ja tuottaa paikallisesti muodonmuutetut avainkuvat.
+Alkuperäisiä hahmoja ei maalata uudelleen. Rakennustyökalut tarvitsevat NumPyn ja
+Pillow'n; sovelluksen käyttö ei tarvitse niitä. GitHub Actions rakentaa ja tarkistaa
+lisäpaketin erikseen ja liittää sen julkaisuun.
+
+Kokoelma sisältää **lisäpaketin version 1.0.0**. Alkuperäiskuvien ZIP on kehitysaineistoa;
+asennuspainikkeesta valitaan nimenomaan **Ubuntu-Live-Pack-1.0.0.zip**.

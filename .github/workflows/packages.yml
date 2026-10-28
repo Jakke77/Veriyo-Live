@@ -81,14 +81,51 @@ jobs:
           $null = [System.Management.Automation.Language.Parser]::ParseFile((Join-Path $root 'veriyo_live/lock-screen.ps1'), [ref]$tokens, [ref]$parseErrors)
           if ($parseErrors.Count -gt 0) { throw ($parseErrors | Out-String) }
           Pop-Location
+      - name: Smoke check native desktop surface when Explorer is available
+        shell: pwsh
+        env:
+          QT_QPA_PLATFORM: windows
+        run: |
+          $root = (Get-ChildItem outputs/windows -Directory | Where-Object Name -Like '*Windows*' | Select-Object -First 1).FullName
+          & "$root/runtime/python.exe" "$root/packaging/check_windows_surface.py"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - uses: actions/upload-artifact@v4
         with:
           name: veriyo-windows
           path: |
             outputs/windows/*.zip
             outputs/windows/SHA256SUMS
+  ubuntu-pack:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      QT_QPA_PLATFORM: offscreen
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install rendering tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libegl1 libgl1 libxkbcommon0 libfontconfig1 libdbus-1-3 fonts-dejavu-core
+          python -m pip install -r packaging/requirements-windows.txt
+          python -m pip install 'numpy>=2.2,<3' 'Pillow>=11,<13'
+      - name: Build all 45 Ubuntu live scenes from checked originals
+        run: python tools/build_ubuntu_pack.py --output outputs/ubuntu-pack --jobs 2
+      - name: Install the real pack and verify every frame in the packaged format
+        env:
+          XDG_DATA_HOME: ${{ runner.temp }}/veriyo-pack-check
+        run: python main.py --install-ubuntu-pack outputs/ubuntu-pack/Ubuntu-Live-Pack-1.0.0.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: veriyo-ubuntu-live-pack
+          compression-level: 0
+          path: |
+            outputs/ubuntu-pack/*.zip
+            outputs/ubuntu-pack/SHA256SUMS
   release:
-    needs: [ubuntu, windows]
+    needs: [ubuntu, windows, ubuntu-pack]
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-24.04
     permissions:
@@ -119,11 +156,12 @@ jobs:
                   assert not target.exists(),path.name
                   shutil.copyfile(path,target)
                   files.append(target)
-          assert len(files)==3,'Expected Ubuntu deb, source ZIP and Windows ZIP'
+          assert len(files)==5,'Expected application packages, source ZIP and both Ubuntu live pack archives'
           (output/'SHA256SUMS').write_text(''.join(sha256(p.read_bytes()).hexdigest()+'  '+p.name+'\n' for p in sorted(files)))
           notes='Veriyö Live '+VERSION+' — Ubuntu GNOME ja Windows 10/11.\n\n'
           notes+='Paketit on rakennettu ja tarkistettu molemmilla käyttöjärjestelmillä. Käyttöohjeet ja lukitusnäytön rajat ovat repon README.md-tiedostossa.\n\n'
-          notes+='Windows: pura koko ZIP ja avaa Veriyo-Live.exe. Ubuntu: sudo apt install ./veriyo-live_'+VERSION+'_all.deb\n'
+          notes+='Windows: pura koko ZIP ja avaa Veriyo-Live.exe. Ubuntu: sudo apt install ./veriyo-live_'+VERSION+'_all.deb\n\n'
+          notes+='Ubuntu-taustat: lataa Ubuntu-Live-Pack-1.0.0.zip, valitse sovelluksessa Ubuntun oletustaustat ja paina Asenna live-paketti. Valitse sitten Ubuntu-versio ja ota tausta käyttöön. Originals-ZIP on kehitysaineistoa.\n'
           Path('release-notes.md').write_text(notes)
           PY
       - name: Publish verified packages

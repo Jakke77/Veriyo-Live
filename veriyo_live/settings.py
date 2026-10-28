@@ -37,10 +37,14 @@ class Settings:
     interval: int = 60
     lock_screen: bool = False
     autostart: bool = False
+    ubuntu_version: str = '26.10'
 
     def validate(self):
-        if self.theme not in ('otava', 'hiillos'):
+        if self.theme not in ('otava', 'hiillos', 'ubuntu'):
             raise ValueError('Tuntematon taustakuva.')
+        from .ubuntu_pack import versions
+        if self.ubuntu_version not in versions():
+            raise ValueError('Tuntematon Ubuntu-versio.')
         if self.date_mode not in ('none', 'blood', 'gregorian', 'both'):
             raise ValueError('Tuntematon päivämäärän näyttötapa.')
         for name, limit in (('latitude', 90), ('longitude', 180)):

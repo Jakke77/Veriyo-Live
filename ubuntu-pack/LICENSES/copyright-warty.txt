@@ -1,0 +1,6 @@
+This package was debianized by Nathaniel McCallum <npmccallum@gentoo.org> on
+Tue, 27 Jul 2004 14:04:12 -0400.
+
+Upstream Author: Jeff Waugh <jeff.waugh@canonical.com>
+
+Copyright: Copyright 2004 Canonical Ltd.
