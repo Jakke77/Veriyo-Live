@@ -17,7 +17,7 @@ def exception_hook(kind,value,trace):
 sys.excepthook=exception_hook
 print('Native surface: process started',flush=True)
 ROOT=Path(__file__).resolve().parents[1]
-sys.path.insert(0,str(ROOT))
+sys.path[:0]=[str(ROOT),str(ROOT/'vendor')]
 if os.name!='nt':raise SystemExit('Windows only')
 user=ctypes.WinDLL('user32',use_last_error=True)
 user.FindWindowW.argtypes=[wintypes.LPCWSTR,wintypes.LPCWSTR];user.FindWindowW.restype=wintypes.HWND
