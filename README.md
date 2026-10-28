@@ -18,6 +18,10 @@ Ohjelma toimii kokonaan ilman verkkoyhteyttä ja ilman Ajanlaskut ja Sää -asen
 
 ## Ubuntu live -paketti · 45 versiota
 
+![Ubuntu-versiovalikko](screenshots/ubuntu-live.png)
+
+[Katso 48 sekunnin liike-esimerkki: Ubuntu 22.04](screenshots/ubuntu-22.04-live-demo.mp4)
+
 1. Lataa julkaisuista sovelluksen lisäksi **Ubuntu-Live-Pack-1.0.0.zip**.
 2. Avaa Veriyö Live ja valitse **Taustakuvan tyyli → Ubuntun oletustaustat**.
 3. Paina **Asenna live-paketti…** ja valitse ladattu ZIP. Paketti tarkistetaan ja asennetaan paikallisesti.
