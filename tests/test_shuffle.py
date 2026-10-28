@@ -14,7 +14,6 @@ from veriyo_live.engine import Engine
 from veriyo_live.settings import Settings
 from veriyo_live.shuffle import background_key, choose_next, eligible_options
 from test_live import FakeBackend, spin_until
-from test_windows_lock import FakeWindowsBackend
 
 
 class ShuffleTests(unittest.TestCase):
@@ -112,12 +111,15 @@ class ShuffleTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             value=Settings(theme='stream',shuffle_enabled=True,shuffle_interval=60,
                            shuffle_choices=['stream','rose_garden'])
-            window=Window(value,folder);adapter=FakeWindowsBackend()
+            # The GUI scheduler test must not enter a real WorkerW surface in
+            # offscreen Windows. Native drawing has its own Windows smoke job.
+            window=Window(value,folder);adapter=FakeBackend()
             window.engine.adapter_factory=lambda:adapter
             window.preview_timer.stop();window.shuffle_timer.stop();window.engine.timer.stop()
             try:
                 with patch('veriyo_live.app.set_autostart'):window.start()
                 spin_until(lambda:not window.engine.busy)
+                self.assertTrue(window.engine.running)
                 window.shuffle_due=0;window.shuffle_tick();spin_until(lambda:not window.engine.busy)
                 self.assertEqual(window.theme.currentData(),'rose_garden')
                 self.assertEqual(window.engine.settings.theme,'rose_garden')
@@ -126,7 +128,7 @@ class ShuffleTests(unittest.TestCase):
                 window.engine.stop();spin_until(lambda:not window.engine.busy)
                 window.shuffle_tick();self.assertIsNone(window.shuffle_due)
                 window.engine.restore();spin_until(lambda:not window.engine.busy)
-                self.assertEqual(adapter.current,'original-desktop')
+                self.assertEqual(adapter.current,'original')
             finally:
                 if window.engine.busy:spin_until(lambda:not window.engine.busy)
                 window.allow_quit=True;window.close()
