@@ -67,7 +67,7 @@ try:
     assert not errors and not exceptions
     assert user.GetForegroundWindow()==foreground,'Procedural scene stole focus'
     print('PASS: native procedural scene rendered without changing focus or wallpaper settings',flush=True)
-    for theme in ('stream','rose_garden','lighthouse'):
+    for theme in ('polaris','moon','stream','rose_garden','lighthouse'):
         surface.entry=SceneEntry(Settings(theme=theme,date_mode='none'))
         app.processEvents();first=surface.grab().toImage()
         for _ in range(5):app.processEvents();QTest.qWait(100)
@@ -75,7 +75,7 @@ try:
         assert not later.isNull() and later!=first,theme+' did not animate'
         assert not errors and not exceptions
         assert user.GetForegroundWindow()==foreground,theme+' stole focus'
-    print('PASS: native stream, rose_garden and lighthouse scenes animate with unchanged focus',flush=True)
+    print('PASS: native polaris, moon, stream, rose_garden and lighthouse scenes animate with unchanged focus',flush=True)
     if synthetic:
         print('PASS: native synthetic parent/child embedding, frame rendering and unchanged focus; actual Explorer WorkerW unavailable',flush=True)
     else:

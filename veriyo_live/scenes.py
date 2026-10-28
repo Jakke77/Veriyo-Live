@@ -107,30 +107,61 @@ def backdrop(theme, width, height):
     return image
 
 
-def sky_point(alt, az, cx, cy, radius):
-    r = radius*(90-alt)/90
-    angle = math.radians(az)
-    return QPointF(cx+r*math.sin(angle), cy-r*math.cos(angle))
+def sky_point(alt, az, cx, cy, scale):
+    """North-facing stereographic window: horizon down, east right, zenith up.
+
+    Use the original Otava wallpaper's projection, with identical x/y scale.
+    Directions outside this window are omitted, never folded into the view.
+    """
+    from .render import project
+    if alt < 0:
+        return None
+    try:
+        x, y = project(alt, az)
+    except ValueError:  # The opposite (southern) horizon is singular.
+        return None
+    if abs(x) > 2+1e-8 or not -2-1e-8 <= y <= 1e-8:
+        return None
+    return QPointF(cx+x*scale, cy+y*scale)
 
 
 def chart(p, moment, settings, w, h, phase):
-    cx, cy, radius = w*.35, h*.43, min(w*.29, h*.33)
+    cx, cy, radius = w*.35, h*.76, min(w*.145, h*.31)
     p.setBrush(Qt.BrushStyle.NoBrush)
-    for fraction in (.33, .66, 1):
-        p.setPen(QPen(QColor(130, 159, 210, 36 if fraction < 1 else 95), .8))
-        p.drawEllipse(QPointF(cx, cy), radius*fraction, radius*fraction)
+    # Curved altitude parallels and azimuth meridians in the same projection.
+    for altitude in (0, 30, 60):
+        path = QPainterPath(); connected = False
+        for azimuth in range(-180, 181, 2):
+            point = sky_point(altitude, azimuth, cx, cy, radius)
+            if point is None:
+                connected = False; continue
+            if connected: path.lineTo(point)
+            else: path.moveTo(point)
+            connected = True
+        p.setPen(QPen(QColor(130, 159, 210, 95 if altitude == 0 else 36), .8))
+        p.drawPath(path)
     p.setPen(QPen(QColor(130, 159, 210, 22), .7))
-    p.drawLine(QPointF(cx-radius, cy), QPointF(cx+radius, cy))
-    p.drawLine(QPointF(cx, cy-radius), QPointF(cx, cy+radius))
+    for azimuth in (-90, -60, -30, 0, 30, 60, 90):
+        path = QPainterPath(); connected = False
+        for altitude in range(91):
+            point = sky_point(altitude, azimuth, cx, cy, radius)
+            if point is None:
+                connected = False; continue
+            if connected: path.lineTo(point)
+            else: path.moveTo(point)
+            connected = True
+        p.drawPath(path)
     if settings.guides:
-        for angle, name in ((0, 'POHJOINEN'), (90, 'ITÄ'), (180, 'ETELÄ'), (270, 'LÄNSI')):
-            pt = sky_point(0, angle, cx, cy, radius+25)
-            label(p, QRectF(pt.x()-58, pt.y()-12, 116, 25), name, 10, '#899cbf')
+        for x, name in ((cx-2*radius, 'LÄNSI'), (cx, 'POHJOINEN'), (cx+2*radius, 'ITÄ')):
+            label(p, QRectF(x-58, cy+8, 116, 25), name, 10, '#899cbf')
+        label(p, QRectF(cx-65, cy-2*radius-30, 130, 25), 'ZENIITTI ↑', 10, '#899cbf')
     points = {}
     for hip, name, alt, az, mag in stars_at(int(moment.timestamp()), settings.latitude, settings.longitude):
         if alt <= 0:
             continue
         pt = sky_point(alt, az, cx, cy, radius)
+        if pt is None:
+            continue
         points[hip] = pt
         size = max(.65, 2.5-mag*.43)
         brightness = .87+.13*math.sin(phase*2+hip*.17)
@@ -151,13 +182,13 @@ def chart(p, moment, settings, w, h, phase):
     for a, b in links:
         if a in points and b in points:
             p.drawLine(points[a], points[b])
-    if 11767 in points or settings.latitude <= 0:
-        pole = points.get(11767) or sky_point(abs(settings.latitude), 180, cx, cy, radius)
+    if 11767 in points:
+        pole = points[11767]
         glow(p, pole.x(), pole.y(), 23, '#d0c7ff', 150)
         p.setBrush(QColor('#f5edff')); p.setPen(Qt.PenStyle.NoPen); p.drawEllipse(pole, 2.5, 2.5)
         if settings.guides:
             label(p, QRectF(pole.x()+12, pole.y()-25, 250, 24),
-                  'POHJANTÄHTI' if 11767 in points else 'ETELÄINEN TAIVAANNAPA', 11, '#d2d6fa')
+                  'POHJANTÄHTI', 11, '#d2d6fa')
         # Decorative orbiting light, distinct from the actual catalogue positions.
         for i in range(2):
             r = 45+i*24
@@ -203,9 +234,10 @@ def moon_scene(p, moment, settings, w, h, phase):
     samples, events = moon_day(moment.astimezone(zone).date(), settings.latitude, settings.longitude, settings.timezone)
     path = QPainterPath(); visible = False; trail = []
     for _, alt, az in samples:
-        if alt < 0:
+        point = sky_point(alt, az, cx, cy, radius)
+        if point is None:
             visible = False; continue
-        point = sky_point(alt, az, cx, cy, radius); trail.append(point)
+        trail.append(point)
         if visible: path.lineTo(point)
         else: path.moveTo(point)
         visible = True
@@ -214,8 +246,8 @@ def moon_scene(p, moment, settings, w, h, phase):
     if trail:
         point = trail[int((phase/(2*math.pi) % 1)*len(trail)) % len(trail)]
         glow(p, point.x(), point.y(), 28, '#b3a2ff', 170)
-    if moon.altitude >= 0:
-        pos = sky_point(moon.altitude, moon.azimuth, cx, cy, radius)
+    pos = sky_point(moon.altitude, moon.azimuth, cx, cy, radius)
+    if pos is not None:
         lunar_disc(p, pos.x(), pos.y(), 15, moon.illumination, moon.tilt)
     x = w*.77; y = h*.31
     lunar_disc(p, x, y, min(94, h*.105), moon.illumination, moon.tilt)
@@ -227,6 +259,8 @@ def moon_scene(p, moment, settings, w, h, phase):
           f'Korkeus {moon.altitude:.1f}° · suunta {moon.azimuth:.1f}°', 11, '#a6b1cc')
     if moon.altitude < 0:
         label(p, QRectF(w*.66, h*.58, w*.31, 26), 'Kuu on horisontin alapuolella', 11, '#c4addb')
+    elif pos is None:
+        label(p, QRectF(w*.66, h*.58, w*.31, 26), 'Kuu on pohjoisnäkymän ulkopuolella', 11, '#c4addb')
     for i, (name, when) in enumerate(events):
         label(p, QRectF(w*.66, h*.63+i*27, w*.31, 25), f'{name} noin {when.astimezone(zone):%H:%M}', 12)
     if not events:
@@ -343,7 +377,7 @@ def render_scene(moment, settings, width, height, animation_seconds=None):
             else:
                 moon_scene(p, moment, settings, w, h, phase)
             if settings.guides:
-                label(p, QRectF(w*.075, h*.82, w*.55, 28), 'TAIVASKARTTA · zeniitti keskellä · itä oikealla', 10, '#7f94b6')
+                label(p, QRectF(w*.075, h*.82, w*.55, 28), 'POHJOISEEN KATSOTTUNA · länsi vasemmalla · itä oikealla', 10, '#7f94b6')
         elif settings.theme == 'bloodwork':
             blood_scene(p, moment, settings, w, h, phase)
         else:
