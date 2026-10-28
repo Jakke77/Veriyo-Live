@@ -22,6 +22,7 @@ from veriyo_live.app import Window
 from veriyo_live.engine import Engine
 from veriyo_live.platforms import GnomeBackend,WallpaperSession
 from test_live import FakeBackend,spin_until,APP
+from test_windows_lock import FakeWindowsBackend
 
 
 def sample_manifest():
@@ -207,6 +208,30 @@ class InstalledPackTests(unittest.TestCase):
                 self.assertEqual(adapter.calls,['apply','apply']);self.assertIsNone(engine.motion_entry)
             finally:
                 adapter.release.set()
+                if engine.busy:spin_until(lambda:not engine.busy)
+                engine.deleteLater()
+
+    def test_windows_lock_rejection_still_publishes_motion_entry_and_freezes_safely(self):
+        with tempfile.TemporaryDirectory() as folder:
+            adapter=FakeWindowsBackend();adapter.lock_error='rejected'
+            engine=Engine(folder,adapter_factory=lambda:adapter)
+            engine.library=self.library;engine.timer.stop()
+            try:
+                engine.start(Settings(theme='ubuntu',lock_screen=True),640,360)
+                spin_until(lambda:not engine.busy)
+                self.assertTrue(engine.running)
+                self.assertIsNotNone(engine.motion_entry)
+                self.assertTrue(engine.session.warning)
+                engine.set_ubuntu_version('8.04');spin_until(lambda:not engine.busy)
+                self.assertEqual(engine.motion_entry.version,'8.04')
+                self.assertEqual(adapter.lock_calls,['Backup','Set'])
+                engine.stop();spin_until(lambda:not engine.busy)
+                self.assertIsNone(engine.motion_entry)
+                self.assertTrue((Path(folder)/'ubuntu-paused.jpg').is_file())
+                engine.restore();spin_until(lambda:not engine.busy)
+                self.assertEqual(adapter.current,'original-desktop')
+                self.assertEqual(adapter.lock_image,b'original-lock')
+            finally:
                 if engine.busy:spin_until(lambda:not engine.busy)
                 engine.deleteLater()
 

@@ -5,6 +5,7 @@ param(
 )
 $ErrorActionPreference = 'Stop'
 [Console]::OutputEncoding = [System.Text.UTF8Encoding]::new()
+try {
 Add-Type -AssemblyName System.Runtime.WindowsRuntime
 $null = [Windows.Storage.StorageFile, Windows.Storage, ContentType=WindowsRuntime]
 $null = [Windows.System.UserProfile.LockScreen, Windows.System.UserProfile, ContentType=WindowsRuntime]
@@ -19,7 +20,7 @@ function Await-Result($Operation, [Type]$ResultType) {
 }
 if ($Operation -eq 'Backup') {
     $uri = [Windows.System.UserProfile.LockScreen]::OriginalImageFile
-    if ($null -eq $uri) { throw 'Nykyistä lukituskuvaa ei voi varmuuskopioida.' }
+    if ($null -eq $uri) { throw 'VERIYO_LOCK:backup' }
     if ($uri.Scheme -eq 'file') {
         $file = Await-Result ([Windows.Storage.StorageFile]::GetFileFromPathAsync($uri.LocalPath)) ([Windows.Storage.StorageFile])
     } else {
@@ -28,10 +29,19 @@ if ($Operation -eq 'Backup') {
     [System.IO.File]::Copy($file.Path, $ImagePath, $true)
 } else {
     if (-not [Windows.System.UserProfile.UserProfilePersonalizationSettings]::IsSupported()) {
-        throw 'Windows ei salli tämän käyttäjän lukituskuvan vaihtamista.'
+        throw 'VERIYO_LOCK:unsupported'
     }
     $file = Await-Result ([Windows.Storage.StorageFile]::GetFileFromPathAsync($ImagePath)) ([Windows.Storage.StorageFile])
     $ok = Await-Result ([Windows.System.UserProfile.UserProfilePersonalizationSettings]::Current.TrySetLockScreenImageAsync($file)) ([bool])
-    if (-not $ok) { throw 'Windows ei hyväksynyt lukituskuvaa. Tarkista omat mukautusasetukset.' }
+    if (-not $ok) { throw 'VERIYO_LOCK:rejected' }
 }
 Write-Output 'OK'
+} catch {
+    # A short machine-readable result, without personal paths or a stack dump.
+    $code = 'failed'
+    if ($Operation -eq 'Backup') { $code = 'backup' }
+    elseif ($_.Exception.Message -eq 'VERIYO_LOCK:unsupported') { $code = 'unsupported' }
+    elseif ($_.Exception.Message -eq 'VERIYO_LOCK:rejected') { $code = 'rejected' }
+    [Console]::Error.WriteLine('VERIYO_LOCK:' + $code)
+    exit 1
+}

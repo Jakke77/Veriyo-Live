@@ -196,11 +196,18 @@ class Engine(QObject):
             self.pending_freeze = False
             self.status.emit('Toiminto ei onnistunut: ' + error + ' Varmuuskopio säilytetään palautusta varten.')
         elif operation == 'restore':
-            self.status.emit('Aiempi tausta palautettu. Muualla valitsemaasi uutta työpöytäkuvaa ei korvata.')
+            if self.session.warning:
+                self.status.emit('Työpöytätaustan palautus valmis. ' + self.session.warning)
+            else:
+                self.status.emit('Aiempi tausta palautettu. Muualla valitsemaasi uutta työpöytäkuvaa ei korvata.')
         elif self.running:
             if self.settings.theme=='ubuntu':
-                self.status.emit(f'Ubuntu {self.settings.ubuntu_version} · rauhallinen 48 sekunnin live-silmukka käytössä')
-            else:self.status.emit(f'Elävä tausta käytössä · päivitys {self.settings.interval // 60} min välein')
+                message = f'Ubuntu {self.settings.ubuntu_version} · rauhallinen 48 sekunnin live-silmukka käytössä'
+            else:
+                message = f'Elävä tausta käytössä · päivitys {self.settings.interval // 60} min välein'
+            if self.session.warning:
+                message += '\n' + self.session.warning
+            self.status.emit(message)
         elif self.stop_requested:
             self.status.emit('Päivitys pysäytetty. Viimeinen kuva jää taustaksi.')
         self.changed.emit()
