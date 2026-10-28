@@ -6,11 +6,12 @@ from pathlib import Path
 import sys
 import os
 import time
-from PyQt6.QtCore import QLockFile, QTimer, Qt
+from PyQt6.QtCore import QLockFile, QSignalBlocker, QTimer, Qt
 from PyQt6.QtGui import QIcon, QImage, QPixmap
 from PyQt6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDoubleSpinBox,
     QFileDialog, QFormLayout, QHBoxLayout, QLabel, QMainWindow, QMenu, QMessageBox,
-    QPushButton, QScrollArea, QSizePolicy, QSystemTrayIcon, QVBoxLayout, QWidget)
+    QPushButton, QScrollArea, QSizePolicy, QSystemTrayIcon, QVBoxLayout, QWidget,
+    QDialog, QDialogButtonBox, QListWidget, QListWidgetItem)
 from . import VERSION
 from .calendar import ZONE
 from .engine import Engine, Task
@@ -18,6 +19,7 @@ from .ubuntu_pack import PackLibrary, catalog, PACK_NAME
 from .platforms import set_autostart
 from .render import ASSETS, render
 from .settings import Settings, data_dir
+from .shuffle import INTERVALS, background_options, background_key, choose_next, eligible_options, with_background
 
 STYLE = '''
 QWidget { background: #0d080d; color: #f5eaf0; font-size: 13px; }
@@ -84,6 +86,7 @@ class Window(QMainWindow):
         self.demo_start = None
         self.backgrounds = {}
         self.last_preview_second = None
+        self.shuffle_due = None
         self.tray = None
         content = QWidget()
         outer = QVBoxLayout(content)
@@ -189,6 +192,25 @@ class Window(QMainWindow):
         self.autostart = QCheckBox('Käynnistä elävä tausta kirjautuessani sisään')
         self.autostart.setChecked(settings.autostart)
         form.addRow('', self.autostart)
+        shuffle_row=QWidget();shuffle_layout=QVBoxLayout(shuffle_row);shuffle_layout.setContentsMargins(0,0,0,0)
+        shuffle_top=QHBoxLayout()
+        self.shuffle=QCheckBox('Vaihda taustaa satunnaisesti');self.shuffle.setChecked(settings.shuffle_enabled)
+        self.shuffle.setToolTip('Automaattinen vaihto toimii, kun tausta on otettu käyttöön. Pysäytä päivitys pysäyttää myös satunnaisvaihdon.')
+        self.shuffle_interval=QComboBox()
+        for seconds,name in INTERVALS:self.shuffle_interval.addItem(name,seconds)
+        self.shuffle_interval.setCurrentIndex(self.shuffle_interval.findData(settings.shuffle_interval))
+        shuffle_top.addWidget(self.shuffle);shuffle_top.addWidget(self.shuffle_interval)
+        shuffle_layout.addLayout(shuffle_top)
+        shuffle_buttons=QHBoxLayout()
+        self.shuffle_select=QPushButton('Valitse mukaan tulevat taustat…')
+        self.shuffle_now=QPushButton('Vaihda satunnainen tausta nyt')
+        self.shuffle_now.setToolTip('Vaihtaa käynnissä olevan taustan; pysäytettynä valitsee vain esikatselun.')
+        shuffle_buttons.addWidget(self.shuffle_select);shuffle_buttons.addWidget(self.shuffle_now)
+        shuffle_layout.addLayout(shuffle_buttons);form.addRow('Satunnaisvaihto',shuffle_row)
+        self.shuffle.toggled.connect(self.shuffle_changed)
+        self.shuffle_interval.currentIndexChanged.connect(self.shuffle_changed)
+        self.shuffle_select.clicked.connect(self.choose_shuffle_backgrounds)
+        self.shuffle_now.clicked.connect(self.random_background)
         outer.addWidget(form_widget)
         hint = QLabel('Otava-maisemissa katsotaan pohjoiseen. Uudet taivaskartat näyttävät koko näkyvän taivaan; sijainti ja aikavyöhyke valitaan itse. '
             'Ubuntu-kuvat ovat taustakuvakokoelma; niihin ei luvata havaittavaa animaatiota. '
@@ -230,6 +252,8 @@ class Window(QMainWindow):
         self.preview_timer.setInterval(100)
         self.preview_timer.timeout.connect(self.preview_tick)
         self.preview_timer.start()
+        self.shuffle_timer=QTimer(self);self.shuffle_timer.setInterval(1000)
+        self.shuffle_timer.timeout.connect(self.shuffle_tick);self.shuffle_timer.start()
         self.refresh_preview()
         self.update_controls()
 
@@ -237,7 +261,90 @@ class Window(QMainWindow):
         return Settings(theme=self.theme.currentData(), latitude=self.latitude.value(), longitude=self.longitude.value(),
                         guides=self.guides.isChecked(), date_mode=self.date_mode.currentData(), interval=self.interval.currentData(),
                         lock_screen=self.lock.isChecked(), autostart=self.autostart.isChecked(),
-                        ubuntu_version=self.ubuntu_version.currentData(),timezone=self.timezone.currentText()).validate()
+                        ubuntu_version=self.ubuntu_version.currentData(),timezone=self.timezone.currentText(),
+                        shuffle_enabled=self.shuffle.isChecked(),shuffle_interval=self.shuffle_interval.currentData(),
+                        shuffle_choices=list(self.settings.shuffle_choices)).validate()
+
+    def shuffle_changed(self,*args):
+        try:
+            self.settings=replace(self.settings,shuffle_enabled=self.shuffle.isChecked(),
+                                  shuffle_interval=self.shuffle_interval.currentData())
+            self.settings.save(self.directory/'settings.json')
+            self.shuffle_due=None;self.update_controls()
+        except Exception as error:self.show_status(str(error))
+
+    def choose_shuffle_backgrounds(self):
+        value=self.values()
+        options=background_options()
+        eligible=dict(eligible_options(value,self.library.installed()))
+        selected=set(value.shuffle_choices) if value.shuffle_choices else set(eligible)
+        dialog=QDialog(self);dialog.setWindowTitle('Satunnaisvaihdon taustat');dialog.resize(580,580)
+        layout=QVBoxLayout(dialog)
+        hint=QLabel('Valitse vaihtoon mukaan tulevat taustat. Nykyistä taustaa ei arvota heti uudelleen. Ubuntu-kuvat tarvitsevat asennetun kuvapaketin.')
+        hint.setWordWrap(True);layout.addWidget(hint)
+        listing=QListWidget();layout.addWidget(listing)
+        for key,name in options:
+            item=QListWidgetItem(name);item.setData(Qt.ItemDataRole.UserRole,key)
+            item.setFlags(item.flags()|Qt.ItemFlag.ItemIsUserCheckable)
+            item.setCheckState(Qt.CheckState.Checked if key in selected else Qt.CheckState.Unchecked)
+            if key not in eligible:
+                item.setFlags(item.flags() & ~Qt.ItemFlag.ItemIsEnabled)
+                item.setToolTip('Asenna ensin Ubuntu-kuvapaketti.' if key.startswith('ubuntu:') else 'Otava-maisemat tukevat leveysasteita 60–70° N.')
+            listing.addItem(item)
+        actions=QHBoxLayout();all_button=QPushButton('Kaikki käytettävissä olevat');clear_button=QPushButton('Tyhjennä')
+        def check_items(all_available):
+            for index in range(listing.count()):
+                item=listing.item(index);checked=all_available and item.data(Qt.ItemDataRole.UserRole) in eligible
+                item.setCheckState(Qt.CheckState.Checked if checked else Qt.CheckState.Unchecked)
+        all_button.clicked.connect(lambda:check_items(True));clear_button.clicked.connect(lambda:check_items(False))
+        actions.addWidget(all_button);actions.addWidget(clear_button);layout.addLayout(actions)
+        buttons=QDialogButtonBox(QDialogButtonBox.StandardButton.Ok|QDialogButtonBox.StandardButton.Cancel)
+        layout.addWidget(buttons)
+        def choices():
+            return [listing.item(i).data(Qt.ItemDataRole.UserRole) for i in range(listing.count())
+                    if listing.item(i).checkState()==Qt.CheckState.Checked]
+        def accept():
+            if not set(choices()).intersection(eligible):
+                QMessageBox.information(dialog,'Valitse tausta','Valitse vähintään yksi käytettävissä oleva tausta. Automaattinen vaihtelu tarvitsee vähintään kaksi.')
+                return
+            dialog.accept()
+        buttons.accepted.connect(accept);buttons.rejected.connect(dialog.reject)
+        if dialog.exec()!=QDialog.DialogCode.Accepted:return
+        try:
+            self.settings=replace(self.settings,shuffle_choices=choices())
+            self.settings.save(self.directory/'settings.json');self.shuffle_due=None
+            self.show_status(f'Satunnaisvaihtoon valittu {len(self.settings.shuffle_choices)} taustaa.')
+        except Exception as error:self.show_status(str(error))
+
+    def random_background(self):
+        if self.engine.busy or self.pack_worker is not None:return False
+        try:
+            value=self.values()
+            choice=choose_next(eligible_options(value,self.library.installed()),background_key(value),value.shuffle_choices)
+            self.shuffle_due=time.monotonic()+value.shuffle_interval
+            if choice is None:
+                self.show_status('Satunnaisvaihtoon ei löydy toista käytettävissä olevaa taustaa. Valitse mukaan vähintään kaksi taustaa.')
+                return False
+            value=with_background(value,choice);value.save(self.directory/'settings.json');self.settings=value
+            blockers=[QSignalBlocker(self.theme),QSignalBlocker(self.ubuntu_version)]
+            self.theme.setCurrentIndex(self.theme.findData(value.theme))
+            self.ubuntu_version.setCurrentIndex(self.ubuntu_version.findData(value.ubuntu_version))
+            del blockers
+            if self.engine.running:self.engine.set_background(choice)
+            self.refresh_preview();self.update_controls()
+            if not self.engine.running:self.show_status('Satunnainen tausta valittu esikatseluun. Ota tausta käyttöön käynnistyspainikkeella.')
+            return True
+        except Exception as error:
+            self.show_status(str(error));return False
+
+    def shuffle_tick(self):
+        if not self.engine.running or not self.shuffle.isChecked():
+            self.shuffle_due=None;return
+        if self.engine.busy or self.pack_worker is not None:return
+        if QApplication.activeModalWidget() is not None:return
+        if self.shuffle_due is None:
+            self.shuffle_due=time.monotonic()+self.shuffle_interval.currentData()
+        elif time.monotonic()>=self.shuffle_due:self.random_background()
 
     def install_pack(self):
         path,_=QFileDialog.getOpenFileName(self,'Asenna Ubuntu-kuvat: '+PACK_NAME,'','Ubuntu-kuvapaketti (*.zip)')
@@ -315,6 +422,7 @@ class Window(QMainWindow):
 
     def start(self):
         self.motion_failure=""
+        self.shuffle_due=None
         if not self.save():
             self.open_window()
             return
@@ -332,9 +440,14 @@ class Window(QMainWindow):
     def update_controls(self):
         if not hasattr(self,'save_button'):return
         active = self.engine.running or self.engine.busy or self.pack_worker is not None
+        shuffling_available=not self.engine.busy and self.pack_worker is None
+        self.shuffle.setEnabled(shuffling_available)
+        self.shuffle_interval.setEnabled(shuffling_available and self.shuffle.isChecked())
+        self.shuffle_select.setEnabled(shuffling_available);self.shuffle_now.setEnabled(shuffling_available)
         ubuntu=self.theme.currentData()=='ubuntu'
         from .scenes import SCENES
         scene=self.theme.currentData() in SCENES
+        landscape=self.theme.currentData() in ('stream','rose_garden','lighthouse')
         location=self.theme.currentData() in ('otava','hiillos','polaris','moon')
         self.latitude.setRange(60 if self.theme.currentData() in ('otava','hiillos') else -90,
                                70 if self.theme.currentData() in ('otava','hiillos') else 90)
@@ -353,9 +466,9 @@ class Window(QMainWindow):
         for widget in (self.latitude,self.longitude,self.location_label):widget.setVisible(location)
         self.timezone.setVisible(scene);self.timezone_label.setVisible(scene)
         self.motion_label.setVisible(ubuntu or scene)
-        self.guides.setText('Suunnat ja tähtinimet' if scene else 'Suunnat ja Alkaid')
+        self.guides.setText('Teeman nimi ja vuorokaudenaika' if landscape else 'Suunnat ja tähtinimet' if scene else 'Suunnat ja Alkaid')
         self.start_button.setText('Ota taustakuva käyttöön' if ubuntu else 'Ota elävä tausta käyttöön')
-        self.demo.setVisible(self.theme.currentData() in ('otava','hiillos','polaris','moon'))
+        self.demo.setVisible(landscape or self.theme.currentData() in ('otava','hiillos','polaris','moon'))
         if self.demo.isHidden() and self.demo.isChecked():self.demo.setChecked(False)
         self.interval_label.setText('Lukituskuva' if ubuntu else 'Päivitysväli')
         self.start_button.setEnabled(not active)
@@ -397,7 +510,8 @@ class Window(QMainWindow):
             moment = moment or datetime.now(timezone.utc)
             self.preview.update_image(render(moment, value, 1280, 720, self.backgrounds.get(value.theme),library=self.library,
                                              animation_seconds=datetime.now(timezone.utc).timestamp()))
-            local = moment.astimezone(ZONE)
+            from zoneinfo import ZoneInfo
+            local = moment.astimezone(ZoneInfo(value.timezone) if value.theme in SCENES else ZONE)
             self.time_label.setText(('ESIKATSELU · ' if self.demo.isChecked() else '') + f'{local:%d.%m.%Y %H:%M:%S} {local.tzname()}')
         except Exception as error:
             if self.theme.currentData()=='ubuntu':

@@ -1,5 +1,5 @@
 """Small validated settings, separate from the calendar/weather application's data."""
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 import json
 import math
 import os
@@ -40,9 +40,13 @@ class Settings:
     autostart: bool = False
     ubuntu_version: str = '26.10'
     timezone: str = 'Europe/Helsinki'
+    shuffle_enabled: bool = False
+    shuffle_interval: int = 1560
+    shuffle_choices: list = field(default_factory=list)
 
     def validate(self):
-        if self.theme not in ('otava', 'hiillos', 'ubuntu', 'polaris', 'moon', 'bloodwork', 'deep_space'):
+        if self.theme not in ('otava', 'hiillos', 'ubuntu', 'polaris', 'moon', 'bloodwork', 'deep_space',
+                              'stream', 'rose_garden', 'lighthouse'):
             raise ValueError('Tuntematon taustakuva.')
         from .ubuntu_pack import versions
         if self.ubuntu_version not in versions():
@@ -64,7 +68,15 @@ class Settings:
             raise ValueError('Tuntematon aikavyöhyke.') from error
         if type(self.interval) is not int or self.interval not in (60, 300, 1560):
             raise ValueError('Päivitysvälin pitää olla 1, 5 tai 26 minuuttia.')
-        for name in ('guides', 'lock_screen', 'autostart'):
+        from .shuffle import INTERVALS, background_options
+        if type(self.shuffle_interval) is not int or self.shuffle_interval not in dict(INTERVALS):
+            raise ValueError('Virheellinen satunnaisvaihdon aikaväli.')
+        known=dict(background_options())
+        if (not isinstance(self.shuffle_choices,list) or len(self.shuffle_choices)>len(known)
+                or any(not isinstance(key,str) or key not in known for key in self.shuffle_choices)
+                or len(set(self.shuffle_choices))!=len(self.shuffle_choices)):
+            raise ValueError('Virheellinen satunnaisvaihdon taustaluettelo.')
+        for name in ('guides', 'lock_screen', 'autostart', 'shuffle_enabled'):
             if type(getattr(self, name)) is not bool:
                 raise ValueError('Virheellinen valinta: ' + name)
         return self
