@@ -120,6 +120,8 @@ class PackLibrary:
                     content=stream.read(item)
                     if item.filename in checks and sha256(content).hexdigest()!=checks[item.filename]:
                         raise ValueError('Live-paketin kuvan tarkiste on väärä: '+item.filename)
+                    if item.filename in checks and not content.startswith(b'\xff\xd8\xff'):
+                        raise ValueError('Live-paketin avainkuvan pitää olla JPEG-kuva.')
                     target=temporary/item.filename
                     target.parent.mkdir(parents=True,exist_ok=True)
                     target.write_bytes(content)

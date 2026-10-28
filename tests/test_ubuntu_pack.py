@@ -239,3 +239,18 @@ class InstalledPackTests(unittest.TestCase):
             finally:
                 if engine.busy:spin_until(lambda:not engine.busy)
                 engine.deleteLater()
+
+    def test_disguised_non_jpeg_is_rejected_before_image_decoder(self):
+        with ZipFile(self.archive) as original:
+            value=json.loads(original.read('pack.json'))
+        payload=b'<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080"/>'
+        first=value['releases'][0]['frames'][0]
+        first['sha256']=sha256(payload).hexdigest()
+        target=self.root/'disguised.zip'
+        with ZipFile(self.archive) as original,ZipFile(target,'w') as out:
+            for info in original.infolist():
+                content=json.dumps(value) if info.filename=='pack.json' else payload if info.filename==first['file'] else original.read(info)
+                out.writestr(info.filename,content)
+        before=(self.library.root/'pack.json').read_bytes()
+        with self.assertRaisesRegex(ValueError,'JPEG'):self.library.install(target)
+        self.assertEqual(before,(self.library.root/'pack.json').read_bytes())
