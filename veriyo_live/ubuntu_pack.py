@@ -125,8 +125,13 @@ class PackLibrary:
                     target.write_bytes(content)
                     if item.filename in checks:
                         reader=QImageReader(str(target))
-                        if reader.size()!=QSize(1920,1080) or reader.read().isNull():
-                            raise ValueError('Live-paketissa on vioittunut kuva.')
+                        try:
+                            if reader.size()!=QSize(1920,1080) or reader.read().isNull():
+                                raise ValueError('Live-paketissa on vioittunut kuva.')
+                        finally:
+                            # QImageReader owns a QFile until destruction. Windows cannot
+                            # atomically rename the staging directory while that file is open.
+                            del reader
             if self.root.exists():
                 if (self.root/'pack.json').read_bytes()==manifest:
                     # Repair an interrupted/corrupted installation only while the app is stopped.

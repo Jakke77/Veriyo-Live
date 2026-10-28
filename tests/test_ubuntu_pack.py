@@ -221,8 +221,8 @@ class InstalledPackTests(unittest.TestCase):
                                  {'schema':adapter.desktop,'key':'picture-options'},
                                  {'schema':adapter.saver,'key':'picture-uri'}]}
             adapter.apply_paths(xml,entry.frames[0],journal)
-            self.assertEqual(json.loads(writes[0][2]),xml.as_uri())
-            self.assertEqual(json.loads(writes[3][2]),entry.frames[0].as_uri())
+            self.assertEqual(json.loads(writes[0][2]),xml.resolve().as_uri())
+            self.assertEqual(json.loads(writes[3][2]),entry.frames[0].resolve().as_uri())
 
     def test_active_version_change_updates_scene_without_recapturing_backup(self):
         with tempfile.TemporaryDirectory() as folder:
