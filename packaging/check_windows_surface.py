@@ -8,7 +8,9 @@ from pathlib import Path
 import sys
 
 faulthandler.enable()
+exceptions=[]
 def exception_hook(kind,value,trace):
+    exceptions.append(str(value))
     traceback.print_exception(kind,value,trace)
     sys.stderr.flush()
 sys.excepthook=exception_hook
@@ -28,7 +30,7 @@ from PyQt6.QtTest import QTest
 from veriyo_live.ubuntu_pack import MotionEntry
 from veriyo_live.windows_motion import MotionDesktop
 print('Native surface: creating QApplication',flush=True)
-app=QApplication([])
+app=QApplication([sys.argv[0]])
 print('Native surface: screens',len(app.screens()),flush=True)
 user.GetForegroundWindow.restype=wintypes.HWND
 user.GetParent.argtypes=[wintypes.HWND];user.GetParent.restype=wintypes.HWND
@@ -40,6 +42,7 @@ print('Native surface: child created',flush=True)
 try:
     for _ in range(20):app.processEvents();QTest.qWait(100)
     assert not errors,errors
+    assert not exceptions,exceptions
     assert user.GetParent(int(surface.winId()))==surface.parent_handle
     assert user.GetForegroundWindow()==foreground,'Background surface stole focus'
     print('PASS: native WorkerW child created, rendered, left focus unchanged and closed safely')

@@ -117,7 +117,10 @@ class MotionDesktop(QWidget):
             if event.message==0x02B1:  # WM_WTSSESSION_CHANGE
                 if event.wParam==7:self.timer.stop()  # Locked: don't spend CPU animating an invisible desktop.
                 elif event.wParam==8:self.timer.start()
-        return super().nativeEvent(event_type,message)
+        # Let Qt's Windows dispatcher handle all unconsumed messages. QWidget's
+        # nativeEvent has no default result value; passing through its protected
+        # Python wrapper can leave an undefined LRESULT during window creation.
+        return False,0
 
     def shutdown(self):
         self.timer.stop()
