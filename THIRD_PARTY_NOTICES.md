@@ -16,6 +16,23 @@ Kirjaston voi korvata omalla versiolla; sitä ei sulauteta suljettuun binäärii
 
 Numeerinen testiaineisto `tests/otava-astropy.json` on Ajanlaskut ja Sää -projektin
 Astropy 7.1 / ERFA -vertailuaineisto. Astropya ei tarvita käytössä tai testeissä.
+Uuden Kuu-teeman `tests/moon-astropy.json` on laskettu erikseen Astropy 7.1:n
+sisäisellä ephemeridillä ilman verkkolatauksia, ilman ilmakehän taittumaa ja
+merenpinnan korkeudelle. Sovellus käyttää PyMeeusin kuusarjoja.
+
+## Uusien teemojen tähtiluettelo ja kuvitus
+
+`veriyo_live/assets/bright-stars.json` on David Nashin / Astronexuksen HYG Database
+4.1 -aineiston muokattu 634 tähden otos. HYG yhdistää Hipparcos-, Yale Bright Star-
+ja Gliese-luetteloita. Valinta: HIP-tähdet magnitudiin 4.2 asti ja Pienen karhun
+lisätähdet; valitut kentät, rektaskensio muunnettu tunneista asteiksi.
+Otos säilyy **CC BY-SA 4.0** -lisenssillä. Lähteen tarkka commit-osoite ja SHA256
+ovat JSON-tiedostossa; alkuperäinen lisenssimerkintä on `docs/HYG-LICENSE.txt`.
+https://github.com/astronexus/HYG-Database · https://creativecommons.org/licenses/by-sa/4.0/
+
+Uusien teemojen metsät, maisemat, kivikappaleet, kuun havainnollinen pintatekstuuri,
+sumut ja koneiston merkit piirretään projektin omalla ohjelmakoodilla. Kuun tekstuuri
+ei ole kraatterikartta. Avaruusmaisema ja Veri Ajan koneisto ovat kuvitusta.
 
 Taustakuvapohjat `otava.png` ja `hiillos.png` on tehty 27.10.2026 kuvanmuokkauksella
 projektin alkuperäisistä 24.10.2026 luoduista Veriyö-kuvista. Alkuperäisen kuvan

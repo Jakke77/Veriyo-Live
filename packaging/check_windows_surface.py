@@ -58,6 +58,15 @@ try:
     assert user.GetForegroundWindow()==foreground,'Background surface stole focus'
     image=surface.grab().toImage()
     assert not image.isNull()
+    from veriyo_live.scenes import SceneEntry
+    from veriyo_live.settings import Settings
+    surface.entry=SceneEntry(Settings(theme='deep_space',date_mode='none'))
+    for _ in range(10):app.processEvents();QTest.qWait(100)
+    animated=surface.grab().toImage()
+    assert not animated.isNull() and animated!=image
+    assert not errors and not exceptions
+    assert user.GetForegroundWindow()==foreground,'Procedural scene stole focus'
+    print('PASS: native procedural scene rendered without changing focus or wallpaper settings',flush=True)
     if synthetic:
         print('PASS: native synthetic parent/child embedding, frame rendering and unchanged focus; actual Explorer WorkerW unavailable',flush=True)
     else:

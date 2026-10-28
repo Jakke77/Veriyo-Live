@@ -5,6 +5,7 @@ import math
 import os
 from pathlib import Path
 import tempfile
+from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 
 def data_dir():
@@ -38,9 +39,10 @@ class Settings:
     lock_screen: bool = False
     autostart: bool = False
     ubuntu_version: str = '26.10'
+    timezone: str = 'Europe/Helsinki'
 
     def validate(self):
-        if self.theme not in ('otava', 'hiillos', 'ubuntu'):
+        if self.theme not in ('otava', 'hiillos', 'ubuntu', 'polaris', 'moon', 'bloodwork', 'deep_space'):
             raise ValueError('Tuntematon taustakuva.')
         from .ubuntu_pack import versions
         if self.ubuntu_version not in versions():
@@ -52,8 +54,14 @@ class Settings:
             if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) or abs(value) > limit:
                 raise ValueError('Virheellinen sijainti.')
         # This first composition is designed for circumpolar Otava in northern Finland.
-        if not 60 <= self.latitude <= 70:
-            raise ValueError('Tämän version taivasnäkymä tukee leveysasteita 60–70° N.')
+        if self.theme in ('otava', 'hiillos') and not 60 <= self.latitude <= 70:
+            raise ValueError('Otava-maisemat tukevat leveysasteita 60–70° N. Uudet taivasteemat tukevat koko maapalloa.')
+        if not isinstance(self.timezone, str):
+            raise ValueError('Virheellinen aikavyöhyke.')
+        try:
+            ZoneInfo(self.timezone)
+        except (ZoneInfoNotFoundError, ValueError) as error:
+            raise ValueError('Tuntematon aikavyöhyke.') from error
         if type(self.interval) is not int or self.interval not in (60, 300, 1560):
             raise ValueError('Päivitysvälin pitää olla 1, 5 tai 26 minuuttia.')
         for name in ('guides', 'lock_screen', 'autostart'):

@@ -1,8 +1,8 @@
 # Veriyö Live
 
-**Elävä Otavan tähtitaustakuva Windowsille ja Ubuntu GNOME:lle.**
-Maisema pysyy paikallaan, Otava seuraa oikeaa tähtitaivasta. Mukana Veri Ajan
-777 päivän ajanlasku, joka perustuu paikalliseen Suomen aikaan.
+**Liikkuvia taivasteemoja ja taustakuvia Windowsille ja Ubuntu GNOME:lle.**
+Otava, Pohjantähden tähtitaivas, Kuun kulkureitti, Veri Ajan taivaankoneisto ja
+hiljainen avaruusmaisema. Mukana on myös Ubuntun oletustaustakuvakokoelma.
 
 **[Lataa uusin julkaisu](https://github.com/Jakke77/Veriyo-Live/releases/latest)** ·
 [Julkaisut](https://github.com/Jakke77/Veriyo-Live/releases) ·
@@ -10,10 +10,46 @@ Maisema pysyy paikallaan, Otava seuraa oikeaa tähtitaivasta. Mukana Veri Ajan
 
 ![Veriyö Live työpöydällä](screenshots/taustakuva.png)
 
-## Versio 0.2.1
+## Versio 0.3.0 · neljä uutta taivasteemaa
 
-Windowsin hylkäämä lukituskuva ei enää pysäytä työpöytätaustaa tai Ubuntu-kuvien
-live-liikettä. Sovellus näyttää lyhyen ilmoituksen ja jatkaa työpöydän päivittämistä.
+Valitse teema **Taustakuvan tyyli** -valikosta. Uudet teemat sisältyvät
+sovellukseen ja toimivat ilman lisäpakettia tai verkkoyhteyttä.
+
+| Teema | Sisältö |
+| --- | --- |
+| Pohjantähden tähtitaivas | 634 luetteloitua kirkasta tähteä. Sijainti ja oikea aika määräävät näkyvän taivaan; valokehät kiertävät koristeellisesti. |
+| Kuun kulkureitti | Todellinen kuunvaihe, Kuun nykyinen sijainti ja päivän reitti sekä arvioidut nousu- ja laskuajat. Reitillä kulkee koristeellinen valopulssi. |
+| Veri Ajan taivaankoneisto | Seitsemän kehää ja kiertävät sinetit; 777 päivän vuoden vaihe muuttaa hehkua ja ulkokehän etenemistä. |
+| Hiljainen avaruus | Kuvitteellinen planeetta, leijuvia kivikappaleita ja hitaasti liikkuvaa sumua. |
+
+![Neljä uutta taivasteemaa](screenshots/sky-scenes.jpg)
+
+[Katso 16 sekunnin video neljästä teemasta normaalinopeudella](screenshots/four-scenes-demo.mp4)
+
+**Pohjantähden tähtitaivas** ja **Kuun kulkureitti** tukevat koko maapallon
+koordinaatteja. Valitse myös sijainnin aikavyöhyke. Eteläisellä pallonpuoliskolla
+Pohjantähti jää horisontin alle; näkyvä kartta näyttää eteläistä taivasta.
+Kartassa zeniitti on keskellä, pohjoinen ylhäällä ja itä oikealla. Metsä on kuvitusta.
+Tähtien ja Kuun todellinen eteneminen on hidasta. Koristeelliset kehät, sinetit,
+valopulssi ja avaruuskappaleet liikkuvat rauhallisesti 96 sekunnin kierrossa.
+
+Windows piirtää uudet teemat Explorerin WorkerW-taustapintaan 10 kertaa sekunnissa
+ja tauottaa lukituksen ajaksi. GNOME käyttää 16 kuvan sulavia taustasiirtymiä;
+tähtitieteelliset tiedot päivitetään valitulla 1, 5 tai 26 minuutin välillä.
+Windowsinkin lukituskuva päivitetään tällä välillä. **Nopeutettu esikatselu**
+näyttää tähtien tai Kuun vuorokauden minuutissa; työpöytä seuraa oikeaa aikaa.
+
+Kuun laskenta huomioi havaintopaikan parallaksin. Nousu ja lasku ovat arvioita
+tasaiselle horisontille tavanomaisella taittumalla; paikallinen maasto ja sää
+vaikuttavat havaintoon. Joillakin päivillä ei ole nousua tai laskua kyseisellä
+paikalla, jolloin sovellus kertoo sen. Veri Ajan päiväraja on aina Suomen ajassa.
+
+Puro ja vuorokauden mukaan vaihtuva maisema jäävät myöhempään versioon.
+
+## Windowsin lukituskuva
+
+Windowsin hylkäämä lukituskuva ei pysäytä työpöytätaustaa.
+Sovellus näyttää lyhyen ilmoituksen ja jatkaa työpöydän päivittämistä.
 Lukituskuvaa ei yritetä uudelleen jokaisella päivityksellä. Myös lukituskuvan
 varmuuskopioinnin epäonnistuessa työpöytä toimii; lukituskuvaa ei silloin muuteta.
 Vanhan 0.2.0-version epäonnistuneesta vaihdosta voi jatkaa poistamalla
@@ -23,53 +59,48 @@ Oma taustakuvasovellus Windows 10/11:lle ja Ubuntu GNOME:lle. Maisema pysyy paik
 seitsemän oikeaa Otavan tähteä liikkuu antamasi paikan tähtitaivaan mukana.
 Ohjelma toimii kokonaan ilman verkkoyhteyttä ja ilman Ajanlaskut ja Sää -asennusta.
 
-## Ubuntu live -paketti · 45 versiota
+## Ubuntun oletustaustakuvakokoelma · 45 versiota
 
 ![Ubuntu-versiovalikko](screenshots/ubuntu-live.png)
 
-[Katso 48 sekunnin liike-esimerkki: Ubuntu 22.04](screenshots/ubuntu-22.04-live-demo.mp4)
+Ubuntu-kuvat esitellään **taustakuvakokoelmana**. Aiemman version esittely lupasi
+hahmojen liikkumista liian vahvasti. Käytännössä liike jäi huomaamattomaksi;
+näihin kuviin ei luvata havaittavaa animaatiota.
 
 1. Lataa julkaisuista sovelluksen lisäksi **Ubuntu-Live-Pack-1.0.0.zip**.
 2. Avaa Veriyö Live ja valitse **Taustakuvan tyyli → Ubuntun oletustaustat**.
-3. Paina **Asenna live-paketti…** ja valitse ladattu ZIP. Paketti tarkistetaan ja asennetaan paikallisesti.
-4. Valitse erillisestä **Ubuntu-versio**-valikosta haluamasi kuva ja paina **Ota elävä tausta käyttöön**.
+3. Paina **Asenna Ubuntu-kuvat…** ja valitse ladattu ZIP. Paketti tarkistetaan ja asennetaan paikallisesti.
+4. Valitse erillisestä **Ubuntu-versio**-valikosta haluamasi kuva ja paina **Ota taustakuva käyttöön**.
 
 Mukana ovat kaikki artikkelin 45 Ubuntu-versiota 4.10–26.10. Versioilla 14.04
-ja 14.10 on sama alkuperäinen tausta, ja molemmat löytyvät valikosta. Eläinhahmot
-hengittävät tai keinuvat hyvin vähän, meduusan lonkerot aaltoilevat ja abstraktit
-muodot virtaavat hitaasti. Kuvaan lisätään vain muutaman pikselin paikallista
-liikettä; 48 sekunnin silmukka jatkuu saumattomasti. Alkuperäiset värit säilyvät.
+ja 14.10 on sama alkuperäinen tausta, ja molemmat löytyvät valikosta.
+Alkuperäiset värit säilyvät.
 Ubuntu-kuvien päällä ei näy Otavaa, kalenteria tai koordinaatteja.
 
 Voit vaihtaa **Ubuntu-versiota myös taustan ollessa käytössä**. Valinta tallentuu
 ja vaihtaa kohtauksen. Muihin taustatyyleihin vaihdettaessa pysäytä päivitys ensin.
 Paketti toimii asennuksen jälkeen ilman verkkoyhteyttä. Sovelluksen perusasennus
-pysyy pienenä: live-kuvat asennetaan erilliseen `packs`-kansioon sovelluksen tietojen alle.
+pysyy pienenä: kuvat asennetaan erilliseen `packs`-kansioon sovelluksen tietojen alle.
 
-Ubuntu GNOME käyttää omaa XML-taustakuvasiirtymää: lisäosaa, videotoistinta tai
-jatkuvaa levyyn kirjoittamista ei tarvita. Windows käyttää Explorerin WorkerW-
-pintaan sijoitettua hiirtä ja näppäimistöä kaappaamatonta taustapintaa, joka
-piirtää rauhallisia siirtymiä 10 kertaa sekunnissa ja taukoaa lukituksen ajaksi.
-Windowsin näkyvä WorkerW-tuki riippuu Explorer-istunnosta; jos pinta ei ole
-saatavilla, ohjelma jättää pysäytyskuvan ja näyttää syyn. Molemmissa käyttöjärjestelmissä
-**Pysäytä päivitys** pysäyttää liikkeen kuvaan ja **Palauta aiempi tausta** palauttaa varmuuskopion.
-Lukitusnäyttöön valmistellaan pysäytyskuva, ei jatkuvaa animaatiota.
+Paketin tiedostonimi **Ubuntu-Live-Pack-1.0.0.zip** säilyy yhteensopivuuden vuoksi.
+Jo asennettua pakettia ei tarvitse asentaa uudelleen. Paketin vanha nimi ei ole
+lupaus näkyvästä liikkeestä. **Palauta aiempi tausta** palauttaa varmuuskopion.
 
 Kuvien alkuperäiset tekijämerkinnät ja lisenssitiedot ovat lisäpaketin
 `LICENSES`-kansiossa. [Alkuperäiskuvien artikkeli](https://www.spacebar.news/ubuntu-linux-default-wallpapers/).
-Tämä on itsenäinen fanisovitus, ei Canonicalin virallinen live-taustapaketti.
+Tämä on itsenäinen fanisovitus, ei Canonicalin virallinen taustapaketti.
 Lisäksi julkaisuissa on alkuperäiskuvat ja lähdetiedot sisältävä ZIP kehitystä varten.
 
 ## Käyttö
 
 1. Avaa **Veriyö Live** sovellusvalikosta (Ubuntu) tai **Veriyo-Live.exe** puretusta Windows-kansiosta.
-2. Valitse **Otava ja järvi** tai **Hiillos**. Oletuspaikka on **65.071562, 25.507046**.
+2. Valitse taivasteema tai **Otava ja järvi** / **Hiillos**. Oletuspaikka on **65.071562, 25.507046**.
 3. Kokeile halutessasi **Nopeutettu esikatselu**. Se ei muuta työpöytää tai vientikuvan aikaa.
-4. Paina **Ota elävä tausta käyttöön**. Kuva päivittyy oletuksena minuutin välein.
+4. Paina **Ota elävä tausta käyttöön**. Otava-maiseman tähtiasento päivittyy oletuksena minuutin välein; uusissa teemoissa on myös jatkuvaa koristeellista liikettä.
 5. Valitse **Päivämäärä**: **Piilossa**, **Veri Aika**, **Tavallinen päivämäärä** tai **Molemmat**. Valinta tallentuu heti ja päivittää myös käynnissä olevan taustakuvan.
 6. **Pysäytä päivitys** jättää viimeisen kuvan. **Palauta aiempi tausta** palauttaa varmuuskopion.
 
-Päivämäärän **Piilossa**-valinta poistaa kaikki päivämäärät ja kellonajan taustakuvasta; koordinaatit jäävät alareunaan. **Tavallinen päivämäärä** näyttää gregoriaanisen päivämäärän ja kellonajan Suomen ajassa. Esikatselun aikaleima sovelluksen sisällä säilyy näkyvissä. Vanhan version päivämäärävalinta säilytetään päivityksessä.
+Päivämäärän **Piilossa**-valinta poistaa päivämäärälohkon. Kuun nousu- ja laskuajat kuuluvat Kuu-teeman sisältöön. **Tavallinen päivämäärä** käyttää uusissa teemoissa valittua aikavyöhykettä ja vanhoissa Otava-maisemissa Suomen aikaa. Esikatselun aikaleima säilyy sovelluksessa. Vanhan version valinnat säilytetään päivityksessä.
 
 Otava käyttää oikeaa tähtiaikaa: yksi kierros kestää noin **23 h 56 min**. Veri Ajan
 vuosi on erillinen 777 paikallisen päivän ajanlasku, joka alkaa 26.6.2026 klo
@@ -87,7 +118,7 @@ ohjelmalla piirrettyä tähteä edustavat laskettua taivasta; pohjakuvan sumut j
 Asenna ladattu paketti:
 
 ```bash
-sudo apt install ./veriyo-live_0.2.1_all.deb
+sudo apt install ./veriyo-live_0.3.0_all.deb
 ```
 
 Sovellus löytyy nimellä **Veriyö Live**. Komento: `veriyo-live`.
@@ -105,7 +136,7 @@ Pythonia tai järjestelmänvalvojan oikeuksia ei tarvita. **Luo-pikakuvakkeet.cm
 tekee pikakuvakkeet vain tämän käyttäjän työpöydälle ja Käynnistä-valikkoon.
 **Tarkista-toiminta.cmd** ajaa mukana tulevat testit muuttamatta taustakuvaa.
 
-Veriyö-kuvien päivitys käyttää Windowsin omaa taustakuvatoimintoa; Ubuntu live -kuvien liike käyttää yllä kuvattua WorkerW-pintaa. Lukituskuvan
+Otava-maisemien päivitys käyttää Windowsin omaa taustakuvatoimintoa; uudet taivasteemat käyttävät yllä kuvattua WorkerW-pintaa. Lukituskuvan
 vaihto käyttää käyttäjäkohtaista Windows WinRT -toimintoa, jos Windows sallii sen.
 Ennen ensimmäistä vaihtoa sovellus yrittää tallentaa nykyisen lukituskuvan; jos
 varmuuskopiointi ei onnistu, vaihtoa ei tehdä. Spotlight- tai diaesitysvalintaa
@@ -119,15 +150,14 @@ palautusyritystä varten.
 
 ## Lukitusnäytön ja live-kuvan rajat
 
-**Veriyö-taivaskuvat** ovat ajastetusti päivittyviä taustakuvia. **Ubuntu live -kuvat** käyttävät jatkuvaa rauhallista siirtymää. Tähtien todellinen hidas liike ei tarvitse videotoistoa.
-Veriyö-esikatselu päivittyy normaalisti kerran sekunnissa ja nopeutettuna 10 kertaa sekunnissa; Veriyö-työpöytä päivittyy 1, 5 tai 26 minuutin välein. Ubuntu live -esikatselu ja Windowsin taustapinta päivittyvät 10 kertaa sekunnissa; GNOME käyttää omaa sulavaa taustakuvasiirtymäänsä.
+Otava-maisemat päivittyvät ajastetusti. Neljä uutta taivasteemaa sisältävät erikseen liikkuvia elementtejä. Ubuntu-kuvat ovat taustakuvakokoelma, johon ei luvata havaittavaa animaatiota.
 Kumpikaan käyttöjärjestelmä ei takaa, että **jo näkyvissä oleva lukitusnäyttö**
 lataa kuvan uudelleen. Sitä ei väitetä jatkuvasti animoiduksi. Tietokoneen
 nukkuessa ei tehdä päivityksiä; herätessä asento korjataan.
 
 Kaikki näytöt saavat saman kuvan päänäytön tarkkuudella. Erilliset näyttökohtaiset
 sommittelut, vapaa sijaintialue ja sujuva videotausta voidaan tehdä myöhemmin.
-Otavan taivasnäkymän sijainti on rajattu leveysasteille 60–70° N. Ubuntu-kuvien liike ei riipu sijainnista. Tähtimalli tukee vuosia 1900–2100.
+Vanhojen Otava-maisemien sijainti on rajattu leveysasteille 60–70° N. Uudet tähtikartta- ja Kuu-teemat tukevat koko maapalloa. Tähtimalli tukee vuosia 1900–2100.
 
 ## Taustalla käyttö ja palautus
 
@@ -152,7 +182,7 @@ Tiedot ovat erillään Ajanlaskut ja Sää -asetuksista:
 - Ubuntu: `~/.local/share/veriyo-live/` (tai XDG_DATA_HOME).
 - Windows: `%LOCALAPPDATA%\VeriyoLive\`.
 
-Veriyö-päivitykset käyttävät kahta vaihtuvaa JPEG-kuvaa. Ubuntu live -paketti sisältää ennalta lasketut avainkuvat; se ei kirjoita uusia kuvia levylle jatkuvasti. Päivitykset eivät kasvata kuva-arkistoa loputtomasti. Viimeisin kuvatiedosto säilytetään lopetettaessa.
+Otava-päivitykset käyttävät kahta vaihtuvaa JPEG-kuvaa. Uusien teemojen GNOME-kuvat käyttävät kahta 16 kuvan vaihtuvaa kansiota, joten kuvien määrä pysyy rajattuna. Windows piirtää uudet teemat suoraan taustapintaan. Ubuntu-kuvapaketti käyttää valmiiksi laskettuja kuvia. Viimeisin pysäytyskuva säilytetään lopetettaessa.
 
 ## Lähdekoodista ja kuvan viennistä
 
@@ -198,7 +228,7 @@ henkilökohtaisia asetuksia, taustakuvan varmuuskopioita tai sovelluksen tietoja
 Päivityksen yhteydessä muuta `veriyo_live/__init__.py`-versionumero ja
 `packaging/launcher.rc`-versionumerot. `main`-haaran päivitys ajaa testit ja
 rakentaa paketit ladattaviksi Actionsin artefakteista. Version mukaisen tagin
-(esimerkiksi `v0.2.1`) julkaisu rakentaa molemmat käyttöjärjestelmäpaketit ja
+(esimerkiksi `v0.3.0`) julkaisu rakentaa molemmat käyttöjärjestelmäpaketit ja
 julkaisee ne yhdessä lähde-ZIP:n ja SHA256-tarkisteiden kanssa. Julkaisua ei
 tehdä, jos kumman tahansa käyttöjärjestelmän tarkistus epäonnistuu.
 

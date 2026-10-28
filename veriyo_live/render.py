@@ -41,12 +41,15 @@ def text(painter, rect, content, size, color='#f0788b', align=Qt.AlignmentFlag.A
     painter.drawText(rect, align | Qt.AlignmentFlag.AlignVCenter, content)
 
 
-def render(moment, settings, width=1920, height=1080, background=None, library=None):
+def render(moment, settings, width=1920, height=1080, background=None, library=None, animation_seconds=None):
     settings.validate()
     if type(width) is not int or type(height) is not int or not 320 <= width <= 7680 or not 240 <= height <= 4320:
         raise ValueError('Kuvan tarkkuus ei ole tuettu (320×240…7680×4320).')
     if moment.tzinfo is None or moment.utcoffset() is None:
         raise ValueError('Aikaleima tarvitsee aikavyöhykkeen.')
+    from .scenes import SCENES, render_scene
+    if settings.theme in SCENES:
+        return render_scene(moment, settings, width, height, animation_seconds)
     if settings.theme == 'ubuntu':
         from .ubuntu_pack import PackLibrary, render_motion
         from .settings import data_dir
