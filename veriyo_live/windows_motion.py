@@ -9,6 +9,10 @@ from PyQt6.QtWidgets import QWidget
 from .ubuntu_pack import draw_motion
 
 
+class DesktopSurfaceUnavailable(RuntimeError):
+    """Explorer is present but does not expose a usable wallpaper surface."""
+
+
 def user32():
     if os.name!='nt':raise RuntimeError('Windowsin live-työpöytä tarvitsee Windowsin.')
     api=ctypes.WinDLL('user32',use_last_error=True)
@@ -28,10 +32,10 @@ def user32():
 
 def desktop_parent(api):
     progman=api.FindWindowW('Progman',None)
-    if not progman:raise RuntimeError('Windowsin Explorer-työpöytää ei löydy.')
+    if not progman:raise DesktopSurfaceUnavailable('Windowsin Explorer-työpöytää ei löydy.')
     result=ctypes.c_size_t()
-    for argument in (0,0xD):
-        api.SendMessageTimeoutW(progman,0x052C,argument,0,0x0002,1000,ctypes.byref(result))
+    for argument,parameter in ((0,0),(0xD,0),(0xD,1)):
+        api.SendMessageTimeoutW(progman,0x052C,argument,parameter,0x0002,1000,ctypes.byref(result))
     found=[]
     callback_type=ctypes.WINFUNCTYPE(wintypes.BOOL,wintypes.HWND,ctypes.c_ssize_t)
     def visit(window,_):
@@ -42,7 +46,11 @@ def desktop_parent(api):
     callback=callback_type(visit)
     api.EnumWindows.argtypes=[callback_type,ctypes.c_ssize_t];api.EnumWindows.restype=wintypes.BOOL
     api.EnumWindows(callback,0)
-    if not found:raise RuntimeError('Windows ei tarjoa live-taustalle WorkerW-pintaa. Tavallinen pysäytyskuva on silti käytettävissä.')
+    if not found:
+        # Recent Explorer layouts can host the wallpaper WorkerW under Progman.
+        child=api.FindWindowExW(progman,None,'WorkerW',None)
+        if child and not api.FindWindowExW(child,None,'SHELLDLL_DefView',None):found.append(child)
+    if not found:raise DesktopSurfaceUnavailable('Windows ei tarjoa live-taustalle WorkerW-pintaa. Tavallinen pysäytyskuva on silti käytettävissä.')
     return found[0]
 
 
