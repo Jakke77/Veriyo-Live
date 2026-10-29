@@ -6,6 +6,9 @@ import math
 import os
 from pathlib import Path
 import random
+import re
+import shutil
+from uuid import uuid4
 from zoneinfo import ZoneInfo
 
 from PyQt6.QtCore import QPointF, QRectF, Qt
@@ -411,22 +414,74 @@ def render_entry(entry, seconds, width, height):
 
 
 def build_slideshow(moment, settings, width, height, directory, slot):
-    """Two bounded slots, 16 native crossfades. Refresh astronomy at the interval.
+    """Build a complete immutable snapshot before giving its URI to GNOME.
 
     Decorative motion loops in 96 seconds; astronomical positions are held at
     this snapshot instead of being sped up or jumped at the end of each loop.
+    Never reuse image URIs: Shell caches textures by URI, including old scenes.
+    Retired snapshots are pruned only after the new wallpaper is applied.
     """
-    folder = Path(directory)/f'scene-{slot}'
-    folder.mkdir(parents=True, exist_ok=True)
-    factor = min(1, 1920/width, 1080/height)
-    width, height = max(320, round(width*factor)), max(240, round(height*factor))
-    paths = []
-    for index in range(16):
-        image = render_scene(moment, settings, width, height, index*PERIOD/16)
-        path = folder/f'{index:02d}.jpg'; temporary = folder/f'.{index:02d}.jpg'
-        if not image.save(str(temporary), 'JPEG', 94):
-            raise RuntimeError('Teeman liikekuvan tallennus epäonnistui.')
-        os.replace(temporary, path); paths.append(path)
-    load_frame.cache_clear()
-    entry = MotionEntry(settings.theme, SCENES[settings.theme][0], '', tuple(paths), PERIOD)
-    return entry, write_gnome_slideshow(entry, Path(directory)/f'live-scene-{slot}.xml')
+    folder = Path(directory).resolve()/f'scene-{slot}-{uuid4().hex}'
+    folder.mkdir(parents=True, exist_ok=False)
+    try:
+        factor = min(1, 1920/width, 1080/height)
+        width, height = max(320, round(width*factor)), max(240, round(height*factor))
+        paths = []
+        for index in range(16):
+            image = render_scene(moment, settings, width, height, index*PERIOD/16)
+            path = folder/f'{index:02d}.jpg'; temporary = folder/f'.{index:02d}.jpg'
+            if not image.save(str(temporary), 'JPEG', 94):
+                raise RuntimeError('Teeman liikekuvan tallennus epäonnistui.')
+            os.replace(temporary, path); paths.append(path)
+        load_frame.cache_clear()
+        entry = MotionEntry(settings.theme, SCENES[settings.theme][0], '', tuple(paths), PERIOD)
+        return entry, write_gnome_slideshow(entry, folder/'slideshow.xml')
+    except Exception:
+        shutil.rmtree(folder,ignore_errors=True)
+        raise
+
+
+def retire_slideshows(directory, current, journal):
+    """Keep the current and preceding snapshot, plus any original wallpaper.
+
+    Called only after apply_paths succeeds. The preceding snapshot stays intact
+    for Shell's outgoing fade. Old 0.3/0.4 fixed-slot directories are recognised
+    for migration; unrelated folders, packs and the original backup are kept.
+    Returns the retired paths so the durable ownership list can stay bounded.
+    """
+    root=Path(directory).resolve()
+    def owned_folder(path):
+        parent=Path(path).resolve().parent
+        if parent.parent != root or not re.fullmatch(r'scene-[01](?:-[0-9a-f]{32})?',parent.name):
+            return None
+        return parent
+    current=owned_folder(Path(current).resolve())
+    if current is None:return set()
+    keep={current}
+    previous=owned_folder(journal.get('last_desktop_path',''))
+    if previous is not None and previous != current:
+        keep.add(previous)
+    else:
+        for frame in reversed(journal['frames']):
+            previous=owned_folder(frame)
+            if previous is not None and previous != current:
+                keep.add(previous);break
+    # Original GNOME settings store quoted file URIs. Never delete their files.
+    original=str(journal.get('original',''))
+    retired=set()
+    for folder in root.glob('scene-*'):
+        if (not re.fullmatch(r'scene-[01](?:-[0-9a-f]{32})?',folder.name)
+                or folder.is_symlink() or not folder.is_dir() or folder in keep
+                or folder.name in original):
+            continue
+        try:files=list(folder.iterdir())
+        except OSError:continue
+        if any(p.is_symlink() or not p.is_file() or not re.fullmatch(r'(?:[0-9]{2}\.jpg|slideshow\.xml)',p.name)
+               for p in files):
+            continue
+        registered={frame for frame in journal['frames'] if owned_folder(frame)==folder}
+        try:shutil.rmtree(folder)
+        except OSError:continue  # A cleanup failure must not stop the wallpaper.
+        retired.update(str(p) for p in files)
+        retired.update(registered)
+    return retired

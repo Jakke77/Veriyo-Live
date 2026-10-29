@@ -10,14 +10,23 @@ Mukana ovat myös Otava-maisemat ja Ubuntun oletustaustakuvakokoelma.
 
 ![Veriyö Live työpöydällä](screenshots/taustakuva.png)
 
-## Versio 0.4.1 · tähtitaivaan suunta korjattu
+## Versio 0.4.2 · GNOMEn taustojen sekoittuminen korjattu
 
-**Pohjantähden tähtitaivas** ja **Kuun kulkureitti** katsovat nyt pohjoiseen:
-länsi on vasemmalla, itä oikealla ja zeniitti ylhäällä. Tähdet, tähtikuvioiden
-yhdysviivat ja Kuun reitti käyttävät samaa stereografista projektiota kuin
-alkuperäinen Otava-tausta. Koko taivaan aiempi peilattu karttanäkymä on korvattu
-pohjoiseen avautuvalla näkymällä. Näkymän ulkopuolella olevasta Kuusta kerrotaan
-erikseen; kuunvaihe ja nousu-/laskuajat näkyvät edelleen.
+Satunnaisvaihdon jälkeen GNOME saattoi näyttää eri teemojen kuvia saman
+animaation sisällä muutaman sekunnin välein. Syynä olivat uudelleen käytetyt
+kuvatiedostojen osoitteet ja GNOMEn kuvavälimuisti. Jokainen päivitys tehdään
+nyt omiin tiedostoihinsa ennen käyttöönottoa. Nykyinen ja edellinen kuvasarja
+säilytetään, vanhemmat siivotaan vasta onnistuneen vaihdon jälkeen.
+
+**Satunnaisvaihdon aikaväli** määrää teeman vaihtamisen (esim. 26 minuuttia).
+Taivaan ja maiseman päivitysväli päivittää saman teeman tietoja ja kuvia;
+se ei arvo uutta teemaa. Sulje vanha ohjelma ilmoitusalueen **Lopeta**-valinnalla,
+asenna uusi versio ja paina **Ota elävä tausta käyttöön**. Asetuksia tai
+Ubuntu-kuvapakettia ei tarvitse poistaa.
+
+Version 0.4.1 suuntakorjaus sisältyy tähän julkaisuun: **Pohjantähden tähtitaivas**
+ja **Kuun kulkureitti** katsovat pohjoiseen, zeniitti ylhäällä, länsi vasemmalla
+ja itä oikealla.
 
 ## Puro, ruusut ja majakka
 
@@ -158,7 +167,7 @@ ohjelmalla piirrettyä tähteä edustavat laskettua taivasta; pohjakuvan sumut j
 Asenna ladattu paketti:
 
 ```bash
-sudo apt install ./veriyo-live_0.4.1_all.deb
+sudo apt install ./veriyo-live_0.4.2_all.deb
 ```
 
 Sovellus löytyy nimellä **Veriyö Live**. Komento: `veriyo-live`.
@@ -222,7 +231,7 @@ Tiedot ovat erillään Ajanlaskut ja Sää -asetuksista:
 - Ubuntu: `~/.local/share/veriyo-live/` (tai XDG_DATA_HOME).
 - Windows: `%LOCALAPPDATA%\VeriyoLive\`.
 
-Otava-päivitykset käyttävät kahta vaihtuvaa JPEG-kuvaa. Uusien teemojen GNOME-kuvat käyttävät kahta 16 kuvan vaihtuvaa kansiota, joten kuvien määrä pysyy rajattuna. Windows piirtää uudet teemat suoraan taustapintaan. Ubuntu-kuvapaketti käyttää valmiiksi laskettuja kuvia. Viimeisin pysäytyskuva säilytetään lopetettaessa.
+Otava-päivitykset käyttävät kahta vaihtuvaa JPEG-kuvaa. Uusien teemojen GNOME-kuvat tehdään omiin kuvasarjoihinsa, joiden osoitteita ei käytetä uudelleen. Onnistuneen vaihdon jälkeen säilytetään nykyinen ja edellinen 16 kuvan sarja; alkuperäiseen taustaan kuuluvat tiedostot suojataan siivoukselta. Windows piirtää uudet teemat suoraan taustapintaan. Ubuntu-kuvapaketti käyttää valmiiksi laskettuja kuvia. Viimeisin pysäytyskuva säilytetään lopetettaessa.
 
 ## Lähdekoodista ja kuvan viennistä
 
@@ -268,7 +277,7 @@ henkilökohtaisia asetuksia, taustakuvan varmuuskopioita tai sovelluksen tietoja
 Päivityksen yhteydessä muuta `veriyo_live/__init__.py`-versionumero ja
 `packaging/launcher.rc`-versionumerot. `main`-haaran päivitys ajaa testit ja
 rakentaa paketit ladattaviksi Actionsin artefakteista. Version mukaisen tagin
-(esimerkiksi `v0.4.1`) julkaisu rakentaa molemmat käyttöjärjestelmäpaketit ja
+(esimerkiksi `v0.4.2`) julkaisu rakentaa molemmat käyttöjärjestelmäpaketit ja
 julkaisee ne yhdessä lähde-ZIP:n ja SHA256-tarkisteiden kanssa. Julkaisua ei
 tehdä, jos kumman tahansa käyttöjärjestelmän tarkistus epäonnistuu.
 
