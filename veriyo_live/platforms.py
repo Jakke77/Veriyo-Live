@@ -257,6 +257,12 @@ class WallpaperSession:
             if frame not in value['frames']:value['frames'].append(frame)
         atomic_json(self.path,value)
         self.adapter.apply_paths(desktop_path,lock_path,value)
+        if self.adapter.kind == 'gnome':
+            from .scenes import retire_slideshows
+            retired=retire_slideshows(self.directory,desktop_path,value)
+            value['frames']=[frame for frame in value['frames'] if frame not in retired]
+            value['last_desktop_path']=str(Path(desktop_path).resolve())
+            atomic_json(self.path,value)
 
     def can_resume(self):
         value=json.loads(self.path.read_text(encoding='utf-8'))
