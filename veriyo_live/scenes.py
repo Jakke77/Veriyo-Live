@@ -421,7 +421,7 @@ def build_slideshow(moment, settings, width, height, directory, slot):
     Never reuse image URIs: Shell caches textures by URI, including old scenes.
     Retired snapshots are pruned only after the new wallpaper is applied.
     """
-    folder = Path(directory)/f'scene-{slot}-{uuid4().hex}'
+    folder = Path(directory).resolve()/f'scene-{slot}-{uuid4().hex}'
     folder.mkdir(parents=True, exist_ok=False)
     try:
         factor = min(1, 1920/width, 1080/height)
@@ -451,7 +451,7 @@ def retire_slideshows(directory, current, journal):
     """
     root=Path(directory).resolve()
     def owned_folder(path):
-        parent=Path(path).parent
+        parent=Path(path).resolve().parent
         if parent.parent != root or not re.fullmatch(r'scene-[01](?:-[0-9a-f]{32})?',parent.name):
             return None
         return parent
@@ -472,14 +472,16 @@ def retire_slideshows(directory, current, journal):
     for folder in root.glob('scene-*'):
         if (not re.fullmatch(r'scene-[01](?:-[0-9a-f]{32})?',folder.name)
                 or folder.is_symlink() or not folder.is_dir() or folder in keep
-                or folder.as_uri()+'/' in original):
+                or folder.name in original):
             continue
         try:files=list(folder.iterdir())
         except OSError:continue
         if any(p.is_symlink() or not p.is_file() or not re.fullmatch(r'(?:[0-9]{2}\.jpg|slideshow\.xml)',p.name)
                for p in files):
             continue
+        registered={frame for frame in journal['frames'] if owned_folder(frame)==folder}
         try:shutil.rmtree(folder)
         except OSError:continue  # A cleanup failure must not stop the wallpaper.
         retired.update(str(p) for p in files)
+        retired.update(registered)
     return retired
